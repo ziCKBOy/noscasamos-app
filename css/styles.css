@@ -75,6 +75,9 @@ body {
 }
 
 .cassette-svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
   filter: drop-shadow(0 8px 22px rgba(123,45,66,0.18));
   transition: transform 0.2s ease;
 }
@@ -185,7 +188,8 @@ body {
 .photo-section .eyebrow { color: rgba(245,237,208,0.65) !important; }
 
 .photo-frame {
-  width: 300px; height: 222px;
+  width: min(300px, 100%);
+  aspect-ratio: 300 / 222;
   border-radius: 16px;
   overflow: hidden;
   border: 3px solid rgba(255,255,255,0.55);
@@ -247,6 +251,17 @@ body {
 
 /* ── SHARED SECTION ────────────────────────── */
 .section { padding: 3.8rem 1.5rem; }
+
+/* Contenido centrado con ancho máximo para que no se estire en PC */
+.section > *,
+.countdown > *,
+.dresscode-section > *,
+.rsvp-section > *,
+.gifts-section > * {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .section-dark { background: var(--alt-bg); }
 
 .eyebrow {
@@ -500,4 +515,57 @@ footer {
   font-size: 1rem;
   letter-spacing: 0.4em;
   opacity: 0.55;
+}
+
+/* ── RESPONSIVE ────────────────────────────── */
+
+/* Celulares muy angostos */
+@media (max-width: 360px) {
+  .hero-names { font-size: 3.4rem; }
+  .countdown-grid { gap: 1.2rem; }
+  .cd-num { font-size: 2.6rem; }
+}
+
+/* Tablet y PC */
+@media (min-width: 768px) {
+  .hero-names { font-size: 5.6rem; }
+  .hero-date { font-size: 1rem; }
+  .hero-tagline { font-size: 1.5rem; }
+
+  .photo-section { padding: 4.5rem 2rem; }
+  .photo-frame { width: 460px; }
+
+  .countdown { padding: 3.5rem 2rem; }
+  .countdown-grid { gap: 3.5rem; }
+  .cd-num { font-size: 4.2rem; }
+  .cd-name { font-size: 0.75rem; }
+
+  .section,
+  .dresscode-section,
+  .rsvp-section,
+  .gifts-section { padding: 5rem 2rem; }
+
+  .section-title { font-size: 2.8rem; margin-bottom: 2.6rem; }
+
+  /* Tarjetas de detalle en tres columnas */
+  .section > .detail-list {
+    max-width: 880px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .detail-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.8rem 1.4rem;
+  }
+
+  .section > .timeline { max-width: 520px; }
+
+  .dresscode-body { max-width: 520px; font-size: 1.15rem; }
+  .rsvp-note { font-size: 1.35rem; }
+  .gifts-text { font-size: 1.45rem; }
+
+  .footer-names { font-size: 2.8rem; }
 }
