@@ -278,12 +278,52 @@
     <br>
     Pero si insistes… acá te<br>dejamos una pequeña sugerencia.
   </p>
-  <a href="REEMPLAZAR_CON_TU_ENLACE_BANCARIO"
-     target="_blank" rel="noopener"
-     class="btn btn-outline">
+  <button type="button" class="btn btn-outline" id="gift-open" aria-haspopup="dialog">
     Ver sugerencia 🥂
-  </a>
+  </button>
 </section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- GIFTS MODAL                                   -->
+<!-- ════════════════════════════════════════════ -->
+<dialog class="gift-modal" id="gift-modal" aria-labelledby="gift-modal-title">
+  <button type="button" class="gift-close" id="gift-close" aria-label="Cerrar">×</button>
+
+  <p class="eyebrow">Una pequeña sugerencia</p>
+  <h2 class="gift-title" id="gift-modal-title">Transferencia 💌</h2>
+  <p class="gift-intro">
+    Si quieres hacernos un regalo,<br>puedes transferirnos aquí:
+  </p>
+
+  <dl class="bank-data" id="bank-data">
+    <div><dt>Nombre</dt><dd>Oliver Becerra A.</dd></div>
+    <div><dt>RUT</dt><dd>13.884.187-1</dd></div>
+    <div><dt>Banco</dt><dd>Banco Santander</dd></div>
+    <div><dt>Tipo de cuenta</dt><dd>Cuenta Vista</dd></div>
+    <div><dt>N° de cuenta</dt><dd>0-074-00-75610-9</dd></div>
+    <div><dt>Correo</dt><dd>oliver.becerra@gmail.com</dd></div>
+  </dl>
+
+  <button type="button" class="btn btn-primary gift-copy" id="gift-copy">Copiar datos</button>
+
+  <div class="gift-divider"><span>o si prefieres</span></div>
+
+  <h3 class="gift-subtitle">Lista de novios 🎁</h3>
+  <p class="gift-intro">Elige algo de nuestra lista de regalos.</p>
+  <a href="lista.html" class="btn btn-outline" id="gift-list-link">
+    Ver lista de novios
+  </a>
+
+  <div class="gift-divider"><span>♡</span></div>
+
+  <p class="gift-intro">
+    ¿Ya nos hiciste un regalo?<br>Cuéntanos para poder agradecerte.
+  </p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSec_GYirpFokBr4Axic97u8SnxmepcCcS62v51o5aP7ZCtQkQ/viewform" target="_blank" rel="noopener"
+     class="gift-notify" id="gift-notify-link">
+    Avisar mi regalo →
+  </a>
+</dialog>
 
 <!-- ════════════════════════════════════════════ -->
 <!-- FOOTER                                        -->

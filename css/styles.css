@@ -476,12 +476,134 @@ body {
 }
 
 .btn-outline {
+  background: transparent;
   border: 1.5px solid var(--burgundy);
   color: var(--burgundy);
 }
 .btn-outline:hover, .btn-outline:active {
   background: #1A1240;
   color: #fff;
+}
+
+button.btn { cursor: pointer; }
+.btn-primary { border: 0; }
+
+/* ── GIFTS MODAL ───────────────────────────── */
+.gift-modal {
+  width: min(440px, calc(100% - 2rem));
+  max-height: calc(100svh - 2rem);
+  margin: auto;
+  padding: 2.6rem 1.6rem 2.2rem;
+  border: 0;
+  border-radius: 20px;
+  background: var(--cream);
+  color: var(--dark);
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(26,18,64,0.35);
+  overflow-y: auto;
+}
+.gift-modal::backdrop {
+  background: rgba(26,18,64,0.55);
+  backdrop-filter: blur(3px);
+}
+.gift-modal[open] { animation: modalIn .25s ease-out; }
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+}
+
+.gift-close {
+  position: absolute;
+  top: 0.7rem; right: 0.9rem;
+  width: 2.2rem; height: 2.2rem;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.7rem; line-height: 1;
+  cursor: pointer;
+}
+.gift-close:hover { background: rgba(42,172,191,0.12); }
+
+.gift-title,
+.gift-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  color: var(--burgundy);
+  line-height: 1.2;
+}
+.gift-title { font-size: 2rem; margin-bottom: 0.8rem; }
+.gift-subtitle { font-size: 1.6rem; margin-bottom: 0.4rem; }
+
+.gift-intro {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 1.3rem;
+}
+.gift-intro strong { font-style: normal; font-weight: 600; color: var(--burgundy); }
+
+.bank-data {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.4rem 1.2rem;
+  margin-bottom: 1.3rem;
+  text-align: left;
+}
+.bank-data > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.1rem 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.bank-data > div:last-child { border-bottom: 0; }
+.bank-data dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.15rem;
+  flex-shrink: 0;
+}
+.bank-data dd {
+  font-weight: 400;
+  text-align: right;
+  margin-left: auto;
+  /* Si no cabe junto a la etiqueta, baja entero a la línea siguiente */
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.gift-copy.copied { background: var(--burgundy); }
+
+.gift-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 2rem 0 1.6rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.gift-divider::before,
+.gift-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.gift-notify {
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--rose-btn);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200,48,80,0.35);
+  padding-bottom: 1px;
 }
 
 /* ── FOOTER ────────────────────────────────── */
@@ -515,6 +637,75 @@ footer {
   font-size: 1rem;
   letter-spacing: 0.4em;
   opacity: 0.55;
+}
+
+/* ── LISTA DE REGALOS (lista.html) ─────────── */
+.lista-header {
+  background: linear-gradient(168deg, #F5EDD0 30%, #EEF9FB 100%);
+  padding: 2rem 1.5rem 1rem;
+  text-align: center;
+}
+.lista-header > * { max-width: 640px; margin-left: auto; margin-right: auto; }
+.lista-header .section-title { margin-bottom: 1.2rem; }
+.lista-header .gifts-text { margin-bottom: 1.2rem; }
+
+.lista-back {
+  display: inline-block;
+  margin-bottom: 2.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-decoration: none;
+}
+.lista-back:hover { color: var(--burgundy); }
+
+.lista-help {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.lista-help strong { font-weight: 500; color: var(--dark); }
+
+.section > .lista-grid {
+  max-width: 880px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.lista-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.6rem 1.2rem 1.4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lista-emoji { font-size: 2.2rem; margin-bottom: 0.4rem; }
+.lista-nombre {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 1.45rem;
+  color: var(--burgundy);
+  line-height: 1.2;
+}
+.lista-desc { font-size: 0.95rem; color: var(--muted); margin-top: 0.2rem; }
+.lista-btn {
+  margin-top: auto;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.72rem;
+}
+/* Espacio sobre el botón; margin-top:auto lo deja alineado al fondo */
+.lista-card > :nth-last-child(2) { margin-bottom: 1.2rem; }
+
+.lista-card.elegido { opacity: 0.55; }
+.lista-card.elegido .lista-btn {
+  border-color: var(--muted);
+  color: var(--muted);
+  background: transparent;
+  pointer-events: none;
 }
 
 /* ── RESPONSIVE ────────────────────────────── */

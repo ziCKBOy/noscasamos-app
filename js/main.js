@@ -54,5 +54,44 @@ wrap.addEventListener('click', () => {
     // El formulario de confirmación se abre con el nombre ya escrito
     var rsvp = document.getElementById('rsvp-link');
     rsvp.href = rsvp.href + '?usp=pp_url&entry.424204634=' + encodeURIComponent(nombre.trim());
+
+    // La lista de regalos también recibe el nombre
+    document.getElementById('gift-list-link').href = 'lista.html?para=' + encodeURIComponent(nombre.trim());
+
+    // Y el formulario "Avisar mi regalo"
+    var aviso = document.getElementById('gift-notify-link');
+    aviso.href = aviso.href + '?usp=pp_url&entry.1251987638=' + encodeURIComponent(nombre.trim());
   }
 })();
+
+/* Regalos: ventana con datos de transferencia y lista de novios */
+const giftModal = document.getElementById('gift-modal');
+const giftCopy  = document.getElementById('gift-copy');
+
+document.getElementById('gift-open').addEventListener('click', () => giftModal.showModal());
+document.getElementById('gift-close').addEventListener('click', () => giftModal.close());
+
+// Cerrar al tocar fuera de la ventana
+giftModal.addEventListener('click', e => {
+  if (e.target !== giftModal) return;
+  const r = giftModal.getBoundingClientRect();
+  const fuera = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  if (fuera) giftModal.close();
+});
+
+giftCopy.addEventListener('click', async () => {
+  const texto = [...document.querySelectorAll('#bank-data > div')]
+    .map(row => row.querySelector('dt').textContent + ': ' + row.querySelector('dd').textContent)
+    .join('\n');
+  try {
+    await navigator.clipboard.writeText(texto);
+    giftCopy.textContent = '¡Copiado! ✓';
+  } catch {
+    giftCopy.textContent = 'No se pudo copiar';
+  }
+  giftCopy.classList.add('copied');
+  setTimeout(() => {
+    giftCopy.textContent = 'Copiar datos';
+    giftCopy.classList.remove('copied');
+  }, 2500);
+});
