@@ -69,6 +69,9 @@ wrap.addEventListener('keydown', e => {
   }
 });
 
+// Nombre del invitado (vacío si la invitación no es personalizada)
+let invitadoActual = '';
+
 // ── PERSONALIZACIÓN POR URL (#para=Nombre o ?para=Nombre) ──
 (function() {
   // Intenta hash primero (#para=...), luego query string (?para=...)
@@ -77,6 +80,7 @@ wrap.addEventListener('keydown', e => {
   var nombre = new URLSearchParams(hash).get('para')
             || new URLSearchParams(search).get('para');
   if (nombre && nombre.trim()) {
+    invitadoActual = nombre.trim();
     var el = document.getElementById('para-label');
     // textContent (no innerHTML) para que el nombre de la URL no pueda inyectar HTML
     var strong = document.createElement('strong');
@@ -104,13 +108,16 @@ const giftCopy  = document.getElementById('gift-copy');
 document.getElementById('gift-open').addEventListener('click', () => giftModal.showModal());
 document.getElementById('gift-close').addEventListener('click', () => giftModal.close());
 
-// Cerrar al tocar fuera de la ventana
-giftModal.addEventListener('click', e => {
-  if (e.target !== giftModal) return;
-  const r = giftModal.getBoundingClientRect();
-  const fuera = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
-  if (fuera) giftModal.close();
-});
+// Cerrar una ventana al tocar fuera de ella (el fondo oscuro)
+function cerrarAlTocarFuera(dialogo) {
+  dialogo.addEventListener('click', e => {
+    if (e.target !== dialogo) return;
+    const r = dialogo.getBoundingClientRect();
+    const fuera = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    if (fuera) dialogo.close();
+  });
+}
+cerrarAlTocarFuera(giftModal);
 
 giftCopy.addEventListener('click', async () => {
   const texto = [...document.querySelectorAll('#bank-data > div')]
@@ -128,3 +135,21 @@ giftCopy.addEventListener('click', async () => {
     giftCopy.classList.remove('copied');
   }, 2500);
 });
+
+/* Lista de regalos en una ventana (lista.html queda para links directos) */
+const listaModal = document.getElementById('lista-modal');
+
+document.getElementById('gift-list-link').addEventListener('click', e => {
+  e.preventDefault();
+  renderLista(document.getElementById('lista-modal-grid'), invitadoActual);
+  giftModal.close();
+  listaModal.showModal();
+  listaModal.scrollTop = 0;
+});
+
+document.getElementById('lista-close').addEventListener('click', () => listaModal.close());
+document.getElementById('lista-volver').addEventListener('click', () => {
+  listaModal.close();
+  giftModal.showModal();
+});
+cerrarAlTocarFuera(listaModal);

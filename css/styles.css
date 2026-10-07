@@ -689,8 +689,7 @@ footer {
 }
 .lista-help strong { font-weight: 500; color: var(--dark); }
 
-.section > .lista-grid {
-  max-width: 880px;
+.lista-grid {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -732,6 +731,24 @@ footer {
   background: transparent;
   pointer-events: none;
 }
+
+.section > .lista-grid { max-width: 880px; }
+
+/* Lista dentro de la invitación (ventana) */
+.lista-modal { width: min(880px, calc(100% - 2rem)); }
+.lista-modal .lista-help { margin-bottom: 1.6rem; }
+.lista-modal .lista-back {
+  position: absolute;
+  top: 1rem; left: 1.1rem;
+  margin: 0;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.lista-modal .eyebrow { margin-top: 1.2rem; }
 
 /* ── APARICIÓN AL BAJAR (js/reveal.js) ────── */
 .reveal {

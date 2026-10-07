@@ -345,6 +345,21 @@
   </a>
 </dialog>
 
+<!-- Lista de regalos dentro de la invitación: sin cambiar de página, la música sigue -->
+<dialog class="gift-modal lista-modal" id="lista-modal" aria-labelledby="lista-modal-title">
+  <button type="button" class="gift-close" id="lista-close" aria-label="Cerrar">×</button>
+  <button type="button" class="lista-back" id="lista-volver">← Volver a regalos</button>
+
+  <p class="eyebrow">Vivi y Oliver · 13 · 02 · 2027</p>
+  <h2 class="gift-title" id="lista-modal-title">Lista de regalos 🎁</h2>
+  <p class="lista-help">
+    Cuando elijas un regalo, toca <strong>“Lo regalo yo”</strong> para avisarnos
+    y así evitamos repetidos.
+  </p>
+
+  <ul class="lista-grid" id="lista-modal-grid"></ul>
+</dialog>
+
 <!-- ════════════════════════════════════════════ -->
 <!-- FOOTER                                        -->
 <!-- ════════════════════════════════════════════ -->
@@ -354,6 +369,7 @@
   <div class="footer-hearts">♡ ♡ ♡</div>
 </footer>
 
+<script src="js/lista.js"></script>
 <script src="js/main.js"></script>
 <script src="js/reveal.js"></script>
 </body>

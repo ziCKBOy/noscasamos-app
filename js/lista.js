@@ -41,60 +41,60 @@ function linkFormulario(regalo, invitado) {
   return FORM_URL + '?' + params.toString();
 }
 
-// Nombre del invitado si llegó desde una invitación personalizada (?para=Nombre)
-const invitado = (new URLSearchParams(location.search).get('para') || '').trim();
-if (invitado) {
-  document.getElementById('lista-back').href = 'index.html?para=' + encodeURIComponent(invitado);
-}
+/* Dibuja las tarjetas en `grid` (un <ul class="lista-grid">) */
+function renderLista(grid, invitado) {
+  grid.replaceChildren();
 
-const grid = document.getElementById('lista-grid');
+  for (const r of REGALOS) {
+    const li = document.createElement('li');
+    li.className = 'lista-card';
+    li.dataset.regalo = normalizar(r.nombre);
+    li.dataset.cantidad = r.cantidad || 1;
 
-for (const r of REGALOS) {
-  const li = document.createElement('li');
-  li.className = 'lista-card';
-  li.dataset.regalo = normalizar(r.nombre);
-  li.dataset.cantidad = r.cantidad || 1;
+    const emoji = document.createElement('div');
+    emoji.className = 'lista-emoji';
+    emoji.textContent = r.emoji || '🎁';
 
-  const emoji = document.createElement('div');
-  emoji.className = 'lista-emoji';
-  emoji.textContent = r.emoji || '🎁';
+    const nombre = document.createElement('h2');
+    nombre.className = 'lista-nombre';
+    nombre.textContent = r.nombre;
 
-  const nombre = document.createElement('h2');
-  nombre.className = 'lista-nombre';
-  nombre.textContent = r.nombre;
+    li.append(emoji, nombre);
 
-  li.append(emoji, nombre);
+    if (r.descripcion) {
+      const desc = document.createElement('p');
+      desc.className = 'lista-desc';
+      desc.textContent = r.descripcion;
+      li.append(desc);
+    }
 
-  if (r.descripcion) {
-    const desc = document.createElement('p');
-    desc.className = 'lista-desc';
-    desc.textContent = r.descripcion;
-    li.append(desc);
+    if (r.referencia) {
+      const ref = document.createElement('a');
+      ref.className = 'map-link';
+      ref.href = r.referencia;
+      ref.target = '_blank';
+      ref.rel = 'noopener';
+      ref.textContent = 'Ver ejemplo →';
+      li.append(ref);
+    }
+
+    // Se abre en otra pestaña: la invitación (y su música) sigue abierta
+    const btn = document.createElement('a');
+    btn.className = 'btn btn-outline lista-btn';
+    btn.href = linkFormulario(r.nombre, invitado);
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.textContent = 'Lo regalo yo ♡';
+    li.append(btn);
+
+    grid.append(li);
   }
 
-  if (r.referencia) {
-    const ref = document.createElement('a');
-    ref.className = 'map-link';
-    ref.href = r.referencia;
-    ref.target = '_blank';
-    ref.rel = 'noopener';
-    ref.textContent = 'Ver ejemplo →';
-    li.append(ref);
-  }
-
-  const btn = document.createElement('a');
-  btn.className = 'btn btn-outline lista-btn';
-  btn.href = linkFormulario(r.nombre, invitado);
-  btn.target = '_blank';
-  btn.rel = 'noopener';
-  btn.textContent = 'Lo regalo yo ♡';
-  li.append(btn);
-
-  grid.append(li);
+  marcarElegidos(grid);
 }
 
 /* ── Marcar los regalos ya elegidos ── */
-async function marcarElegidos() {
+async function marcarElegidos(grid) {
   if (!ESTADO_URL.startsWith('https://')) return;
 
   let regalos;
@@ -127,4 +127,13 @@ async function marcarElegidos() {
   grid.append(...cards);
 }
 
-marcarElegidos();
+/* ── Página lista.html ── */
+const paginaGrid = document.getElementById('lista-grid');
+if (paginaGrid) {
+  // Nombre del invitado si llegó desde una invitación personalizada (?para=Nombre)
+  const invitado = (new URLSearchParams(location.search).get('para') || '').trim();
+  if (invitado) {
+    document.getElementById('lista-back').href = 'index.html?para=' + encodeURIComponent(invitado);
+  }
+  renderLista(paginaGrid, invitado);
+}
