@@ -110,7 +110,10 @@ let invitadoActual = '';
 const giftModal = document.getElementById('gift-modal');
 const giftCopy  = document.getElementById('gift-copy');
 
-document.getElementById('gift-open').addEventListener('click', () => giftModal.showModal());
+document.getElementById('gift-open').addEventListener('click', () => {
+  obtenerElegidos(); // adelanta la consulta para que la lista abra ya marcada
+  giftModal.showModal();
+});
 document.getElementById('gift-close').addEventListener('click', () => giftModal.close());
 
 // Cerrar una ventana al tocar fuera de ella (el fondo oscuro)

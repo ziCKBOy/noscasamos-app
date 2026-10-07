@@ -41,90 +41,108 @@ function linkFormulario(regalo, invitado) {
   return FORM_URL + '?' + params.toString();
 }
 
-/* Dibuja las tarjetas en `grid` (un <ul class="lista-grid">) */
-function renderLista(grid, invitado) {
-  grid.replaceChildren();
+/* ── Regalos ya elegidos (aplicación web de Google) ──
+ * Se consulta una sola vez y se reutiliza por un minuto. Si Google tarda más
+ * de 6 s o falla, se responde null y la lista se muestra completa. */
+const ESPERA_MAXIMA_MS = 6000;
+let consultaElegidos = null;
+let consultaHecha = 0;
 
-  for (const r of REGALOS) {
-    const li = document.createElement('li');
-    li.className = 'lista-card';
-    li.dataset.regalo = normalizar(r.nombre);
-    li.dataset.cantidad = r.cantidad || 1;
+function obtenerElegidos() {
+  if (consultaElegidos && Date.now() - consultaHecha < 60000) return consultaElegidos;
+  consultaHecha = Date.now();
 
-    const emoji = document.createElement('div');
-    emoji.className = 'lista-emoji';
-    emoji.textContent = r.emoji || '🎁';
+  const consulta = ESTADO_URL.startsWith('https://')
+    ? fetch(ESTADO_URL)
+        .then(resp => resp.json())
+        .then(datos => (Array.isArray(datos.regalos) ? datos.regalos : null))
+        .catch(() => null)
+    : Promise.resolve(null);
+  const limite = new Promise(resolver => setTimeout(() => resolver(null), ESPERA_MAXIMA_MS));
 
-    const nombre = document.createElement('h2');
-    nombre.className = 'lista-nombre';
-    nombre.textContent = r.nombre;
-
-    li.append(emoji, nombre);
-
-    if (r.descripcion) {
-      const desc = document.createElement('p');
-      desc.className = 'lista-desc';
-      desc.textContent = r.descripcion;
-      li.append(desc);
-    }
-
-    if (r.referencia) {
-      const ref = document.createElement('a');
-      ref.className = 'map-link';
-      ref.href = r.referencia;
-      ref.target = '_blank';
-      ref.rel = 'noopener';
-      ref.textContent = 'Ver ejemplo →';
-      li.append(ref);
-    }
-
-    // Se abre en otra pestaña: la invitación (y su música) sigue abierta
-    const btn = document.createElement('a');
-    btn.className = 'btn btn-outline lista-btn';
-    btn.href = linkFormulario(r.nombre, invitado);
-    btn.target = '_blank';
-    btn.rel = 'noopener';
-    btn.textContent = 'Lo regalo yo ♡';
-    li.append(btn);
-
-    grid.append(li);
-  }
-
-  marcarElegidos(grid);
+  consultaElegidos = Promise.race([consulta, limite]);
+  return consultaElegidos;
 }
 
-/* ── Marcar los regalos ya elegidos ── */
-async function marcarElegidos(grid) {
-  if (!ESTADO_URL.startsWith('https://')) return;
+/* Dibuja las tarjetas en `grid` (un <ul class="lista-grid">). Mientras llega
+ * el estado muestra "Cargando lista…", y luego dibuja todo de una vez, ya
+ * marcado, para que los regalos elegidos no cambien frente al invitado. */
+async function renderLista(grid, invitado) {
+  const turno = String(Date.now() + Math.random());
+  grid.dataset.turno = turno;
 
-  let regalos;
-  try {
-    const resp = await fetch(ESTADO_URL);
-    regalos = (await resp.json()).regalos;
-  } catch {
-    return; // si falla, la lista se muestra completa como antes
-  }
-  if (!Array.isArray(regalos)) return;
+  const cargando = document.createElement('li');
+  cargando.className = 'lista-cargando';
+  cargando.textContent = 'Cargando lista…';
+  grid.replaceChildren(cargando);
+  grid.setAttribute('aria-busy', 'true');
+
+  const elegidos = await obtenerElegidos();
+  if (grid.dataset.turno !== turno) return; // se volvió a abrir mientras cargaba
 
   const conteo = new Map();
-  for (const nombre of regalos) {
+  for (const nombre of elegidos || []) {
     const n = normalizar(nombre);
     conteo.set(n, (conteo.get(n) || 0) + 1);
   }
 
-  for (const card of grid.querySelectorAll('.lista-card')) {
-    if ((conteo.get(card.dataset.regalo) || 0) < Number(card.dataset.cantidad)) continue;
-    card.classList.add('elegido');
-    const btn = card.querySelector('.lista-btn');
-    btn.textContent = 'Ya regalado ✓';
-    btn.removeAttribute('href');
-    btn.setAttribute('aria-disabled', 'true');
+  const tarjetas = REGALOS.map(r => {
+    const yaRegalado = (conteo.get(normalizar(r.nombre)) || 0) >= (r.cantidad || 1);
+    return crearTarjeta(r, invitado, yaRegalado);
+  });
+  // Los ya elegidos van al final
+  tarjetas.sort((a, b) => a.classList.contains('elegido') - b.classList.contains('elegido'));
+
+  grid.replaceChildren(...tarjetas);
+  grid.removeAttribute('aria-busy');
+}
+
+function crearTarjeta(r, invitado, yaRegalado) {
+  const li = document.createElement('li');
+  li.className = 'lista-card' + (yaRegalado ? ' elegido' : '');
+
+  const emoji = document.createElement('div');
+  emoji.className = 'lista-emoji';
+  emoji.textContent = r.emoji || '🎁';
+
+  const nombre = document.createElement('h2');
+  nombre.className = 'lista-nombre';
+  nombre.textContent = r.nombre;
+
+  li.append(emoji, nombre);
+
+  if (r.descripcion) {
+    const desc = document.createElement('p');
+    desc.className = 'lista-desc';
+    desc.textContent = r.descripcion;
+    li.append(desc);
   }
 
-  // Los ya elegidos van al final
-  const cards = [...grid.children];
-  cards.sort((a, b) => a.classList.contains('elegido') - b.classList.contains('elegido'));
-  grid.append(...cards);
+  if (r.referencia) {
+    const ref = document.createElement('a');
+    ref.className = 'map-link';
+    ref.href = r.referencia;
+    ref.target = '_blank';
+    ref.rel = 'noopener';
+    ref.textContent = 'Ver ejemplo →';
+    li.append(ref);
+  }
+
+  const btn = document.createElement('a');
+  btn.className = 'btn btn-outline lista-btn';
+  if (yaRegalado) {
+    btn.textContent = 'Ya regalado ✓';
+    btn.setAttribute('aria-disabled', 'true');
+  } else {
+    // Se abre en otra pestaña: la invitación (y su música) sigue abierta
+    btn.href = linkFormulario(r.nombre, invitado);
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.textContent = 'Lo regalo yo ♡';
+  }
+  li.append(btn);
+
+  return li;
 }
 
 /* ── Página lista.html ── */
