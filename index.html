@@ -48,6 +48,7 @@
 <section class="hero" id="inicio">
   <p class="para-invitado" id="para-label" hidden></p>
   <p class="hero-eyebrow">Te invitamos a nuestra boda</p>
+  <h1 class="hero-names">Vivi y Oliver</h1>
 
   <div class="cassette-wrap" id="cassette" role="button" tabindex="0"
        aria-pressed="false" aria-label="Reproducir nuestra canción" title="Toca para escuchar nuestra canción">
@@ -78,12 +79,12 @@
   <text x="140" y="56" text-anchor="middle"
         font-family="Cormorant Garamond, Georgia, serif"
         font-style="italic" font-size="24" fill="#1A1240" font-weight="600">
-    Vivi y Oliver
+    Lado A <tspan fill="#E04060">♡</tspan>
   </text>
   <text x="140" y="74" text-anchor="middle"
         font-family="Jost, Arial, sans-serif"
         font-size="10" fill="#0D5E6E" letter-spacing="4" font-weight="500">
-    13 · 02 · 2027
+    NUESTRA CANCIÓN
   </text>
 
   <!-- Ventana de cinta — dark con franja roja bold -->
@@ -107,7 +108,7 @@
   <!-- Bobina derecha -->
   <circle cx="190" cy="127" r="22" fill="#F5EDD0"/>
   <circle cx="190" cy="127" r="22" stroke="#E04060" stroke-width="2.5"/>
-  <circle class="reel reel-rev" cx="190" cy="127" r="15" fill="none" stroke="#E04060" stroke-width="4" stroke-dasharray="5 4"/>
+  <circle class="reel" cx="190" cy="127" r="15" fill="none" stroke="#E04060" stroke-width="4" stroke-dasharray="5 4"/>
   <circle cx="190" cy="127" r="7"  fill="#2AACBF"/>
   <circle cx="190" cy="127" r="3"  fill="#F5EDD0"/>
 
@@ -125,12 +126,27 @@
   <!-- Muescas laterales -->
   <rect x="4"   y="72" width="11" height="36" rx="5" fill="#1A8A9E"/>
   <rect x="265" y="72" width="11" height="36" rx="5" fill="#1A8A9E"/>
+
+  <!-- Destello de luz que cruza el plástico cada pocos segundos -->
+  <defs>
+    <linearGradient id="brillo-grad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0"   stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="1"   stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="brillo-clip"><rect x="4" y="6" width="272" height="160" rx="13"/></clipPath>
+  </defs>
+  <g clip-path="url(#brillo-clip)" pointer-events="none">
+    <g transform="skewX(-20)">
+      <rect class="brillo" x="-60" y="0" width="46" height="180" fill="url(#brillo-grad)"/>
+    </g>
+  </g>
 </svg>
   </div>
   <p class="cassette-hint" id="cassette-hint">♪ toca el casete</p>
-  <audio id="cancion" src="assets/cancion.mp3" preload="none" loop></audio>
+  <audio id="cancion" src="assets/cancion.mp3" preload="none" loop
+         data-titulo="Stairway to Heaven · Led Zeppelin"></audio>
 
-  <h1 class="hero-names">Vivi y Oliver</h1>
   <div class="hero-line"></div>
   <p class="hero-date">Sábado · 13 de Febrero · 2027</p>
   <p class="hero-tagline">¡Queremos que estés con nosotros!</p>

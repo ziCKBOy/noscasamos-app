@@ -9,9 +9,13 @@
   --peach:       #F08A28;        /* naranja brillante */
   --peach-dark:  #D47020;
   --muted:       #1A6070;        /* teal oscuro — texto secundario */
+  --teal-texto:  #0D5E6E;        /* teal de la etiqueta del casete: legible en texto pequeño (≥6:1) */
   --card:        #FFFFFF;
+  /* Franjas retro como las líneas de la etiqueta del casete */
+  --franjas: linear-gradient(to bottom,
+      #F0C030 0 3px, #F08A28 3px 6px, #E04060 6px 9px, #2AACBF 9px 12px);
   --border:      rgba(42,172,191,0.20);
-  --alt-bg:      #EEF9FB;        /* teal muy claro */
+  --alt-bg:      #DCF1F4;        /* tinte claro del turquesa del casete */
   --light-peach: #FFF3C8;        /* amarillo muy claro */
 }
 
@@ -35,8 +39,20 @@ body {
   justify-content: center;
   padding: 3rem 1.5rem 5rem;
   text-align: center;
-  background: linear-gradient(168deg, #F5EDD0 30%, #EEF9FB 100%);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(42,172,191,0.20), transparent 42%),
+    radial-gradient(circle at 8% 92%, rgba(224,64,96,0.13), transparent 40%),
+    linear-gradient(168deg, #F5EDD0 30%, var(--light-peach) 100%);
   position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 12px;
+  background: var(--franjas);
+  opacity: 0.75;
 }
 
 .para-invitado {
@@ -61,7 +77,7 @@ body {
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 2.2rem;
+  margin-bottom: 1rem;
 }
 
 /* ── CASSETTE ──────────────────────────────── */
@@ -83,16 +99,26 @@ body {
 }
 .cassette-wrap:active .cassette-svg { transform: scale(0.96); }
 
+/* Destello de luz que cruza el casete cada 5 s (invita a tocarlo) */
+.brillo { animation: brillo 5s ease-in-out infinite; }
+@keyframes brillo {
+  0%, 55% { transform: translateX(0); }
+  100%    { transform: translateX(420px); }
+}
+
+/* Las bobinas solo giran mientras suena la canción (o en la animación corta
+   al tocar sin música); en pausa quedan quietas donde se detuvieron. */
 .reel {
   transform-box: fill-box;
   transform-origin: center;
-  animation: spin 5s linear infinite;
+  animation: spin 0.85s linear infinite;
+  animation-play-state: paused;
 }
-.reel-rev { animation-direction: reverse; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.cassette-wrap.playing .reel { animation-duration: 0.85s; }
+.cassette-wrap.playing .reel,
+.cassette-wrap.sonando .reel { animation-play-state: running; }
 
 .note {
   opacity: 0;
@@ -108,7 +134,6 @@ body {
 .note-3 { left:  40%; top: 5%; }
 
 /* Mientras suena la canción: bobinas rápidas y notas en bucle */
-.cassette-wrap.sonando .reel { animation-duration: 0.85s; }
 .cassette-wrap.sonando .note-1 { animation: noteUp 1.6s ease-out 0.0s infinite; }
 .cassette-wrap.sonando .note-2 { animation: noteUp 1.6s ease-out 0.5s infinite; }
 .cassette-wrap.sonando .note-3 { animation: noteUp 1.6s ease-out 1.0s infinite; }
@@ -136,6 +161,7 @@ body {
   line-height: 1;
   color: var(--burgundy);
   text-wrap: balance;
+  margin-bottom: 2.2rem;
 }
 
 .hero-line {
@@ -164,7 +190,7 @@ body {
 
 .scroll-hint {
   position: absolute;
-  bottom: 2rem;
+  bottom: 3.2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -221,7 +247,7 @@ body {
 
 /* ── COUNTDOWN ─────────────────────────────── */
 .countdown {
-  background: var(--alt-bg);
+  background: var(--dark);
   padding: 2.8rem 1.5rem;
   text-align: center;
 }
@@ -232,7 +258,7 @@ body {
   font-size: 0.72rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: rgba(245,237,208,0.85);
   margin-bottom: 1.6rem;
 }
 
@@ -248,7 +274,7 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 500;
   font-size: 3.2rem;
-  color: var(--burgundy);
+  color: var(--citric);
   line-height: 1;
   font-variant-numeric: tabular-nums;
   display: block;
@@ -260,7 +286,7 @@ body {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: rgba(245,237,208,0.85);
   margin-top: 0.3rem;
 }
 
@@ -403,13 +429,13 @@ body {
 
 /* ── DRESSCODE ─────────────────────────────── */
 .dresscode-section {
-  background: var(--burgundy);
+  background: var(--teal-texto);
   padding: 3.8rem 1.5rem;
   text-align: center;
 }
 
 .dresscode-section .eyebrow   { color: rgba(255,255,255,0.88); }
-.dresscode-section .section-title { color: #FFFFFF; }
+.dresscode-section .section-title { color: var(--citric); }
 
 .dresscode-body {
   font-family: 'Jost', sans-serif;
@@ -440,7 +466,7 @@ body {
 
 /* ── RSVP ──────────────────────────────────── */
 .rsvp-section {
-  background: var(--cream);
+  background: var(--light-peach);
   padding: 3.8rem 1.5rem;
   text-align: center;
 }
@@ -501,8 +527,9 @@ body {
 
 .btn-outline {
   background: transparent;
-  border: 1.5px solid var(--burgundy);
-  color: var(--burgundy);
+  border: 1.5px solid var(--teal-texto);
+  color: var(--teal-texto);
+  font-weight: 500;
 }
 .btn-outline:hover, .btn-outline:active {
   background: #1A1240;
@@ -632,8 +659,8 @@ button.btn { cursor: pointer; }
 
 /* ── FOOTER ────────────────────────────────── */
 footer {
-  background: var(--dark);
-  padding: 3rem 1.5rem;
+  background: var(--franjas) top / 100% 12px no-repeat, var(--dark);
+  padding: calc(3rem + 12px) 1.5rem 3rem;
   text-align: center;
 }
 
@@ -665,7 +692,9 @@ footer {
 
 /* ── LISTA DE REGALOS (lista.html) ─────────── */
 .lista-header {
-  background: linear-gradient(168deg, #F5EDD0 30%, #EEF9FB 100%);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(42,172,191,0.20), transparent 42%),
+    linear-gradient(168deg, #F5EDD0 30%, var(--light-peach) 100%);
   padding: 2rem 1.5rem 1rem;
   text-align: center;
 }
@@ -816,6 +845,7 @@ html { scroll-behavior: smooth; }
 /* Celulares muy angostos */
 @media (max-width: 360px) {
   .hero-names { font-size: 3.4rem; }
+  .cassette-hint { letter-spacing: 0.02em; }
   .countdown-grid { gap: 1.2rem; }
   .cd-num { font-size: 2.6rem; }
 }
@@ -904,5 +934,6 @@ html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .brillo { animation: none; opacity: 0; }
   .menu { transition: none; }
 }

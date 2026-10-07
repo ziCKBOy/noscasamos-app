@@ -43,7 +43,7 @@ function marcarSonando(sonando) {
   wrap.classList.toggle('sonando', sonando);
   wrap.setAttribute('aria-pressed', String(sonando));
   wrap.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
-  hint.textContent = sonando ? '♪ sonando · toca para pausar' : '♪ toca el casete';
+  hint.textContent = sonando ? '♪ sonando · ' + cancion.dataset.titulo : '♪ toca el casete';
 }
 
 async function alternarCancion() {
