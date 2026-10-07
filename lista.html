@@ -34,9 +34,9 @@
 <body>
 
 <header class="lista-header">
-  <a class="lista-back" href="index.html" id="lista-back">← Volver a la invitación</a>
+  <a class="lista-back" href="index.html" id="lista-back"><span aria-hidden="true">←</span> Volver a la invitación</a>
   <p class="eyebrow">Vivi y Oliver · 13 · 02 · 2027</p>
-  <h1 class="section-title">Lista de regalos 🎁</h1>
+  <h1 class="section-title">Lista de regalos <span aria-hidden="true">🎁</span></h1>
   <p class="gifts-text">
     Nuestro mejor regalo es tu presencia ♡<br>
     Pero si quieres regalarnos algo, aquí hay algunas ideas.
@@ -51,10 +51,12 @@
   <ul class="lista-grid" id="lista-grid"></ul>
 </main>
 
+<p class="sr-only" role="status" id="aviso-lector"></p>
+
 <footer>
   <div class="footer-names">Vivi y Oliver</div>
   <div class="footer-sub">13 · 02 · 2027 · Ñuñoa, Santiago</div>
-  <div class="footer-hearts">♡ ♡ ♡</div>
+  <div class="footer-hearts" aria-hidden="true">♡ ♡ ♡</div>
 </footer>
 
 <script src="js/lista.js"></script>

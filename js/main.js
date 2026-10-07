@@ -1,6 +1,8 @@
 /* Countdown to Feb 13 2027 18:00 Chile time */
 const wedding = new Date('2027-02-13T18:00:00-03:00');
 
+const cdTexto = document.getElementById('cd-texto');
+
 function pad(n) { return String(n).padStart(2, '0'); }
 
 function tick() {
@@ -10,12 +12,18 @@ function tick() {
       (document.getElementById(id).textContent = '🎉')
     );
     document.querySelectorAll('.cd-sep').forEach(sep => (sep.hidden = true));
+    cdTexto.textContent = '¡Llegó el gran día!';
     return;
   }
   const d = Math.floor(diff / 86400000);
   const h = Math.floor((diff % 86400000) / 3600000);
   const m = Math.floor((diff % 3600000) / 60000);
   const s = Math.floor((diff % 60000) / 1000);
+  if (s === 59 || !cdTexto.dataset.listo) {
+    cdTexto.dataset.listo = '1';
+    cdTexto.textContent = 'Faltan ' + d + ' días, ' + h + (h === 1 ? ' hora' : ' horas') +
+      ' y ' + m + (m === 1 ? ' minuto' : ' minutos') + ' para la boda.';
+  }
   document.getElementById('cd-days').textContent  = d;
   document.getElementById('cd-hours').textContent = pad(h);
   document.getElementById('cd-min').textContent   = pad(m);
@@ -44,10 +52,8 @@ function animarCasete() {
 function marcarSonando(sonando) {
   wrap.classList.toggle('sonando', sonando);
   wrap.setAttribute('aria-pressed', String(sonando));
-  wrap.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
   hint.textContent = sonando ? '♪ sonando · ' + cancion.dataset.titulo : '♪ toca el casete';
   botonMusica.setAttribute('aria-pressed', String(sonando));
-  botonMusica.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
 }
 
 async function alternarCancion() {
@@ -90,7 +96,10 @@ let invitadoActual = '';
     // textContent (no innerHTML) para que el nombre de la URL no pueda inyectar HTML
     var strong = document.createElement('strong');
     strong.textContent = nombre.trim();
-    el.replaceChildren('Para ', strong, ' ♡');
+    const corazon = document.createElement('span');
+    corazon.setAttribute('aria-hidden', 'true');
+    corazon.textContent = ' ♡';
+    el.replaceChildren('Para ', strong, corazon);
     el.removeAttribute('hidden');
 
     // El formulario de confirmación se abre con el nombre ya escrito
@@ -127,15 +136,35 @@ function cerrarAlTocarFuera(dialogo) {
 }
 cerrarAlTocarFuera(giftModal);
 
+// Copia al portapapeles; si la API moderna no está disponible o falla,
+// usa el método clásico con un campo de texto temporal.
+async function copiarTexto(texto) {
+  try {
+    await navigator.clipboard.writeText(texto);
+    return;
+  } catch { /* se intenta el método clásico */ }
+  const campo = document.createElement('textarea');
+  campo.value = texto;
+  campo.setAttribute('readonly', '');
+  campo.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+  (giftModal.open ? giftModal : document.body).append(campo);
+  campo.select();
+  const ok = document.execCommand('copy');
+  campo.remove();
+  if (!ok) throw new Error('No se pudo copiar');
+}
+
 giftCopy.addEventListener('click', async () => {
   const texto = [...document.querySelectorAll('#bank-data > div')]
     .map(row => row.querySelector('dt').textContent + ': ' + row.querySelector('dd').textContent)
     .join('\n');
   try {
-    await navigator.clipboard.writeText(texto);
+    await copiarTexto(texto);
     giftCopy.textContent = '¡Copiado! ✓';
+    avisarLector('Datos bancarios copiados. Ya puedes pegarlos en la app de tu banco.');
   } catch {
     giftCopy.textContent = 'No se pudo copiar';
+    avisarLector('No se pudieron copiar los datos.');
   }
   giftCopy.classList.add('copied');
   setTimeout(() => {

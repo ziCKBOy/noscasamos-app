@@ -27,6 +27,14 @@ const ENTRY_TIPO    = 'entry.989907467';   // "¿Qué nos regalaste?"
 /* Aplicación web del script de Google que entrega los regalos ya elegidos */
 const ESTADO_URL    = 'https://script.google.com/macros/s/AKfycbyHiS5B9xLQ11tchwnMQPwLCskduJx8ExC79hCaSMsBlyA0mBs7nJF1tCISvJkGmqDo/exec';
 
+// Mensaje para lectores de pantalla (región role="status" de la página)
+function avisarLector(mensaje) {
+  const region = document.getElementById('aviso-lector');
+  if (!region) return;
+  region.textContent = '';
+  setTimeout(() => { region.textContent = mensaje; }, 100);
+}
+
 // "Copas de Vino " y "copas de vino" cuentan como el mismo regalo
 function normalizar(texto) {
   return String(texto).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -65,15 +73,21 @@ function obtenerElegidos() {
 }
 
 /* Dibuja las tarjetas en `grid` (un <ul class="lista-grid">). Mientras llega
- * el estado muestra "Cargando lista…", y luego dibuja todo de una vez, ya
+ * el estado muestra una barra de progreso, y luego dibuja todo de una vez, ya
  * marcado, para que los regalos elegidos no cambien frente al invitado. */
 async function renderLista(grid, invitado) {
   const turno = String(Date.now() + Math.random());
   grid.dataset.turno = turno;
 
+  // Barra de progreso indeterminada mientras llega el estado desde Google
   const cargando = document.createElement('li');
   cargando.className = 'lista-cargando';
-  cargando.textContent = 'Cargando lista…';
+  const barra = document.createElement('div');
+  barra.className = 'barra-progreso';
+  barra.setAttribute('role', 'progressbar');
+  barra.setAttribute('aria-label', 'Cargando lista de regalos');
+  barra.append(document.createElement('span'));
+  cargando.append(barra);
   grid.replaceChildren(cargando);
   grid.setAttribute('aria-busy', 'true');
 
@@ -88,24 +102,30 @@ async function renderLista(grid, invitado) {
 
   const tarjetas = REGALOS.map(r => {
     const yaRegalado = (conteo.get(normalizar(r.nombre)) || 0) >= (r.cantidad || 1);
-    return crearTarjeta(r, invitado, yaRegalado);
+    return crearTarjeta(r, invitado, yaRegalado, grid);
   });
   // Los ya elegidos van al final
   tarjetas.sort((a, b) => a.classList.contains('elegido') - b.classList.contains('elegido'));
 
   grid.replaceChildren(...tarjetas);
   grid.removeAttribute('aria-busy');
+
+  const disponibles = tarjetas.filter(t => !t.classList.contains('elegido')).length;
+  avisarLector('Lista de regalos cargada: ' + disponibles + ' de ' + tarjetas.length +
+    (tarjetas.length === 1 ? ' regalo disponible.' : ' regalos disponibles.'));
 }
 
-function crearTarjeta(r, invitado, yaRegalado) {
+function crearTarjeta(r, invitado, yaRegalado, grid) {
   const li = document.createElement('li');
   li.className = 'lista-card' + (yaRegalado ? ' elegido' : '');
 
   const emoji = document.createElement('div');
   emoji.className = 'lista-emoji';
+  emoji.setAttribute('aria-hidden', 'true');
   emoji.textContent = r.emoji || '🎁';
 
-  const nombre = document.createElement('h2');
+  // Dentro de la ventana el título es <h2>, así que cada regalo va como <h3>
+  const nombre = document.createElement(grid.closest('dialog') ? 'h3' : 'h2');
   nombre.className = 'lista-nombre';
   nombre.textContent = r.nombre;
 
@@ -125,20 +145,24 @@ function crearTarjeta(r, invitado, yaRegalado) {
     ref.target = '_blank';
     ref.rel = 'noopener';
     ref.textContent = 'Ver ejemplo →';
+    ref.setAttribute('aria-label', 'Ver ejemplo de ' + r.nombre + ' (se abre en otra pestaña)');
     li.append(ref);
   }
 
-  const btn = document.createElement('a');
-  btn.className = 'btn btn-outline lista-btn';
+  let btn;
   if (yaRegalado) {
-    btn.textContent = 'Ya regalado ✓';
-    btn.setAttribute('aria-disabled', 'true');
+    btn = document.createElement('span');
+    btn.className = 'btn btn-outline lista-btn';
+    btn.innerHTML = 'Ya regalado <span aria-hidden="true">✓</span>';
   } else {
+    btn = document.createElement('a');
+    btn.className = 'btn btn-outline lista-btn';
     // Se abre en otra pestaña: la invitación (y su música) sigue abierta
     btn.href = linkFormulario(r.nombre, invitado);
     btn.target = '_blank';
     btn.rel = 'noopener';
     btn.textContent = 'Lo regalo yo ♡';
+    btn.setAttribute('aria-label', 'Lo regalo yo: ' + r.nombre + ' (se abre en otra pestaña)');
   }
   li.append(btn);
 

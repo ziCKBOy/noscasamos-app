@@ -47,13 +47,15 @@
     <li><a href="#regalos"><span class="menu-icono" aria-hidden="true">🎁</span><span>Regalos</span></a></li>
     <li class="menu-musica-item">
       <button type="button" class="menu-musica" id="menu-musica"
-              aria-pressed="false" aria-label="Reproducir nuestra canción">
+              aria-pressed="false" aria-label="Música: Stairway to Heaven, de Led Zeppelin">
         <svg class="icono-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z" fill="currentColor"/></svg>
         <svg class="icono-pausa" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 3h2.6v10H4.5zM8.9 3h2.6v10H8.9z" fill="currentColor"/></svg>
       </button>
     </li>
   </ul>
 </nav>
+
+<main id="contenido">
 
 <!-- ════════════════════════════════════════════ -->
 <!-- HERO                                          -->
@@ -64,7 +66,7 @@
   <h1 class="hero-names">Vivi y Oliver</h1>
 
   <div class="cassette-wrap" id="cassette" role="button" tabindex="0"
-       aria-pressed="false" aria-label="Reproducir nuestra canción" title="Toca para escuchar nuestra canción">
+       aria-pressed="false" aria-label="Música: Stairway to Heaven, de Led Zeppelin" title="Toca para escuchar nuestra canción">
     <span class="note note-1">♪</span>
     <span class="note note-2">♫</span>
     <span class="note note-3">♩</span>
@@ -156,7 +158,7 @@
   </g>
 </svg>
   </div>
-  <p class="cassette-hint" id="cassette-hint">♪ toca el casete</p>
+  <p class="cassette-hint" id="cassette-hint" aria-hidden="true">♪ toca el casete</p>
   <audio id="cancion" src="assets/cancion.mp3" preload="none" loop
          data-titulo="Stairway to Heaven · Led Zeppelin"></audio>
 
@@ -177,7 +179,7 @@
 <!-- ════════════════════════════════════════════ -->
 <section class="photo-section">
   <div class="photo-frame">
-    <img src="assets/vivi-y-oliver.jpg" alt="Vivi y Oliver" loading="eager"/>
+    <img src="assets/vivi-y-oliver.jpg" alt="Foto de Vivi y Oliver juntos, abrazados y sonriendo a la cámara" loading="eager"/>
   </div>
 </section>
 
@@ -186,7 +188,8 @@
 <!-- ════════════════════════════════════════════ -->
 <section class="countdown" aria-label="Cuenta regresiva">
   <p class="countdown-label">El gran día se acerca</p>
-  <div class="countdown-grid">
+  <p class="sr-only" id="cd-texto">Faltan pocos días para la boda.</p>
+  <div class="countdown-grid" aria-hidden="true">
     <div class="cd-unit">
       <span class="cd-num" id="cd-days">—</span>
       <span class="cd-name">días</span>
@@ -220,38 +223,38 @@
 
   <div class="detail-list">
     <div class="detail-card">
-      <div class="d-icon">📅</div>
+      <div class="d-icon" aria-hidden="true">📅</div>
       <div>
         <div class="d-label">Fecha</div>
         <div class="d-value">Sábado 13 de febrero de 2027</div>
         <div class="d-links">
           <a class="map-link" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Matrimonio+Vivi+y+Oliver+%F0%9F%92%8D&amp;dates=20270213T210000Z%2F20270214T050000Z&amp;details=Ceremonia+18%3A00+%28puntual%29.+Fiesta+hasta+las+02%3A00.%0AInvitaci%C3%B3n%3A+https%3A%2F%2Fnoscasamos-app.vercel.app%2F&amp;location=Club+Suizo%2C+Dubl%C3%A9+Almeyda+2191%2C+%C3%91u%C3%B1oa%2C+Santiago&amp;ctz=America%2FSantiago" target="_blank" rel="noopener">
-            Agregar a Google Calendar →
+            Agregar a Google Calendar <span aria-hidden="true">→</span><span class="sr-only"> (se abre en otra pestaña)</span>
           </a>
           <a class="map-link" href="assets/boda-vivi-y-oliver.ics" download>
-            iPhone / Outlook (.ics) →
+            iPhone / Outlook (.ics) <span aria-hidden="true">→</span><span class="sr-only"> (descarga el evento para tu calendario)</span>
           </a>
         </div>
       </div>
     </div>
     <div class="detail-card">
-      <div class="d-icon">🕕</div>
+      <div class="d-icon" aria-hidden="true">🕕</div>
       <div>
         <div class="d-label">Hora</div>
         <div class="d-value">18:00 horas (puntual)</div>
       </div>
     </div>
     <div class="detail-card">
-      <div class="d-icon">📍</div>
+      <div class="d-icon" aria-hidden="true">📍</div>
       <div>
         <div class="d-label">Lugar</div>
         <div class="d-value">Dublé Almeyda 2191, Ñuñoa. Club Suizo</div>
         <div class="d-links">
           <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Club+Suizo%2C+Dubl%C3%A9+Almeyda+2191%2C+%C3%91u%C3%B1oa" target="_blank" rel="noopener">
-            Ver en Google Maps →
+            Ver en Google Maps <span aria-hidden="true">→</span><span class="sr-only"> (se abre en otra pestaña)</span>
           </a>
           <a class="map-link" href="https://waze.com/ul?q=Dubl%C3%A9+Almeyda+2191%2C+%C3%91u%C3%B1oa&amp;navigate=yes" target="_blank" rel="noopener">
-            Abrir en Waze →
+            Abrir en Waze <span aria-hidden="true">→</span><span class="sr-only"> (se abre en otra pestaña)</span>
           </a>
         </div>
       </div>
@@ -271,7 +274,7 @@
       <div class="tl-dot"></div>
       <div class="tl-time">18:00</div>
       <div class="tl-event">Ceremonia</div>
-      <div class="tl-desc">El momento más especial — los esperamos puntuales 🌸</div>
+      <div class="tl-desc">El momento más especial — los esperamos puntuales <span aria-hidden="true">🌸</span></div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
@@ -289,13 +292,13 @@
       <div class="tl-dot"></div>
       <div class="tl-time">Después</div>
       <div class="tl-event">¡A bailar!</div>
-      <div class="tl-desc">La pista está lista, la música también 🎶</div>
+      <div class="tl-desc">La pista está lista, la música también <span aria-hidden="true">🎶</span></div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">Toda la noche</div>
       <div class="tl-event">Fiesta hasta las 02:00 AM</div>
-      <div class="tl-desc">¡A celebrar hasta que el cuerpo aguante! ✨</div>
+      <div class="tl-desc">¡A celebrar hasta que el cuerpo aguante! <span aria-hidden="true">✨</span></div>
     </div>
   </div>
 </section>
@@ -310,9 +313,9 @@
     Queremos que te sientas a gusto y que vengas como mejor te sientas, pero si nos solicitas alguna referencia, nuestra recomendación es que asistas <strong>semiformal</strong>: pantalón o vestido largo/corto; chaqueta y pantalón de tela sin corbata.
   </p>
   <div class="chips">
-    <span class="chip">👗 Vestido largo o corto</span>
-    <span class="chip">🕴 Chaqueta sin corbata</span>
-    <span class="chip">✨ Como tú quieras</span>
+    <span class="chip"><span aria-hidden="true">👗</span> Vestido largo o corto</span>
+    <span class="chip"><span aria-hidden="true">🕴</span> Chaqueta sin corbata</span>
+    <span class="chip"><span aria-hidden="true">✨</span> Como tú quieras</span>
   </div>
 </section>
 
@@ -326,12 +329,12 @@
     ¡Necesitamos saber si estarás!<br>
     Por favor confirma antes del<br>
     <strong>30 de noviembre de 2026</strong><br>
-    o lo antes posible 🌺
+    o lo antes posible <span aria-hidden="true">🌺</span>
   </p>
   <a id="rsvp-link" href="https://docs.google.com/forms/d/e/1FAIpQLSdjreQ2p3MVo6-uI8GwZqybt-bWuwGaxEt7Gwr0wpt1rWeUwA/viewform"
      target="_blank" rel="noopener"
      class="btn btn-primary">
-    Confirmar asistencia
+    Confirmar asistencia<span class="sr-only"> (se abre en otra pestaña)</span>
   </a>
 </section>
 
@@ -347,7 +350,7 @@
     Pero si insistes… acá te<br>dejamos una pequeña sugerencia.
   </p>
   <button type="button" class="btn btn-fucsia" id="gift-open" aria-haspopup="dialog">
-    Ver sugerencia 🥂
+    Ver sugerencia <span aria-hidden="true">🥂</span>
   </button>
 </section>
 
@@ -362,7 +365,7 @@
   <!-- En PC: dos columnas (transferencia | lista y aviso); en celular, apiladas -->
   <div class="gift-cols">
   <div class="gift-col">
-  <h2 class="gift-title" id="gift-modal-title">Transferencia 💌</h2>
+  <h2 class="gift-title" id="gift-modal-title">Transferencia <span aria-hidden="true">💌</span></h2>
   <p class="gift-intro">
     Si quieres hacernos un regalo,<br>puedes transferirnos aquí:
   </p>
@@ -372,7 +375,7 @@
     <div><dt>RUT</dt><dd>13.884.187-1</dd></div>
     <div><dt>Banco</dt><dd>Banco Santander</dd></div>
     <div><dt>Tipo de cuenta</dt><dd>Cuenta Vista</dd></div>
-    <div><dt>N° de cuenta</dt><dd>0-074-00-75610-9</dd></div>
+    <div><dt>Número de cuenta</dt><dd>0-074-00-75610-9</dd></div>
     <div><dt>Correo</dt><dd>oliver.becerra@gmail.com</dd></div>
   </dl>
 
@@ -382,20 +385,20 @@
   <div class="gift-divider gift-divider-cols"><span>o si prefieres</span></div>
 
   <div class="gift-col">
-  <h3 class="gift-subtitle">Lista de novios 🎁</h3>
+  <h3 class="gift-subtitle">Lista de novios <span aria-hidden="true">🎁</span></h3>
   <p class="gift-intro">Elige algo de nuestra lista de regalos.</p>
   <a href="lista.html" class="btn btn-outline" id="gift-list-link">
     Ver lista de novios
   </a>
 
-  <div class="gift-divider"><span>♡</span></div>
+  <div class="gift-divider" aria-hidden="true"><span>♡</span></div>
 
   <p class="gift-intro">
     ¿Ya nos hiciste un regalo?<br>Cuéntanos para poder agradecerte.
   </p>
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSec_GYirpFokBr4Axic97u8SnxmepcCcS62v51o5aP7ZCtQkQ/viewform" target="_blank" rel="noopener"
      class="gift-notify" id="gift-notify-link">
-    Avisar mi regalo →
+    Avisar mi regalo <span aria-hidden="true">→</span><span class="sr-only"> (se abre en otra pestaña)</span>
   </a>
   </div>
   </div>
@@ -404,10 +407,10 @@
 <!-- Lista de regalos dentro de la invitación: sin cambiar de página, la música sigue -->
 <dialog class="gift-modal lista-modal" id="lista-modal" aria-labelledby="lista-modal-title">
   <button type="button" class="gift-close" id="lista-close" aria-label="Cerrar">×</button>
-  <button type="button" class="lista-back" id="lista-volver">← Volver a regalos</button>
+  <button type="button" class="lista-back" id="lista-volver"><span aria-hidden="true">←</span> Volver a regalos</button>
 
   <p class="eyebrow">Vivi y Oliver · 13 · 02 · 2027</p>
-  <h2 class="gift-title" id="lista-modal-title">Lista de regalos 🎁</h2>
+  <h2 class="gift-title" id="lista-modal-title">Lista de regalos <span aria-hidden="true">🎁</span></h2>
   <p class="lista-help">
     Cuando elijas un regalo, toca <strong>“Lo regalo yo”</strong> para avisarnos
     y así evitamos repetidos.
@@ -416,13 +419,17 @@
   <ul class="lista-grid" id="lista-modal-grid"></ul>
 </dialog>
 
+</main>
+
 <!-- ════════════════════════════════════════════ -->
 <!-- FOOTER                                        -->
 <!-- ════════════════════════════════════════════ -->
+<p class="sr-only" role="status" id="aviso-lector"></p>
+
 <footer>
   <div class="footer-names">Vivi y Oliver</div>
   <div class="footer-sub">13 · 02 · 2027 · Ñuñoa, Santiago</div>
-  <div class="footer-hearts">♡ ♡ ♡</div>
+  <div class="footer-hearts" aria-hidden="true">♡ ♡ ♡</div>
 </footer>
 
 <script src="js/lista.js"></script>
