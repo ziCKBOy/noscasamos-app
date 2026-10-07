@@ -21,7 +21,7 @@ npx serve .
 
 ## Pendiente antes de publicar
 
-- [ ] **Confirmar asistencia**: reemplazar `https://forms.google.com/REEMPLAZAR_CON_TU_ENLACE` en `index.html` por el link real del formulario.
+- [x] **Confirmar asistencia**: el botón abre el formulario de Google. Con `?para=Nombre`, el nombre llega pre-rellenado (`entry.424204634` en `js/main.js`).
 - [ ] **Regalos**: reemplazar `REEMPLAZAR_CON_TU_ENLACE_BANCARIO` en `index.html` por el link real.
 - [ ] Opcional: cuando el sitio tenga dominio, poner la URL absoluta en `og:image` (WhatsApp necesita URL completa para mostrar la foto en la vista previa).
 

@@ -50,5 +50,9 @@ wrap.addEventListener('click', () => {
     strong.textContent = nombre.trim();
     el.replaceChildren('Para ', strong, ' ♡');
     el.removeAttribute('hidden');
+
+    // El formulario de confirmación se abre con el nombre ya escrito
+    var rsvp = document.getElementById('rsvp-link');
+    rsvp.href = rsvp.href + '?usp=pp_url&entry.424204634=' + encodeURIComponent(nombre.trim());
   }
 })();
