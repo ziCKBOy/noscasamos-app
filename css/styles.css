@@ -458,20 +458,25 @@ body {
 }
 .dresscode-body strong { font-weight: 500; color: #FFFFFF; }
 
+/* Sugerencias de vestimenta como texto simple (no deben parecer botones) */
 .chips {
-  display: flex; justify-content: center;
-  flex-wrap: wrap; gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .chip {
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(255,255,255,0.95);
-  color: #1A1240;
+  color: #FFFFFF;
   font-family: 'Jost', sans-serif;
   font-weight: 500;
-  font-size: 0.92rem;
-  padding: 0.45rem 1.2rem;
-  border-radius: 999px;
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
+  /* Franja traslúcida sutil: se lee como etiqueta, no como botón */
+  background: rgba(255,255,255,0.10);
+  border-radius: 6px;
+  padding: 0.35rem 0.95rem;
+  white-space: nowrap;
 }
 
 /* ── RSVP ──────────────────────────────────── */
@@ -849,6 +854,32 @@ html { scroll-behavior: smooth; }
 .menu-links a[aria-current] { color: var(--burgundy); font-weight: 500; }
 .menu-solo-pc { display: none; }
 
+/* Botón pequeño de música (sincronizado con el casete) */
+.menu-links li.menu-musica-item {
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-musica {
+  width: 34px; height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--teal-texto);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--teal-texto);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s, color .2s;
+}
+.menu-musica svg { width: 14px; height: 14px; }
+.menu-musica .icono-pausa { display: none; }
+.menu-musica[aria-pressed="true"] { background: var(--teal-texto); color: #fff; }
+.menu-musica[aria-pressed="true"] .icono-play  { display: none; }
+.menu-musica[aria-pressed="true"] .icono-pausa { display: block; }
+.menu-musica:focus-visible { outline: 2px solid var(--rose-btn); outline-offset: 2px; }
+
 /* En celular la barra va abajo: espacio para que no tape el pie de página */
 .menu ~ footer { padding-bottom: calc(3rem + 64px + env(safe-area-inset-bottom, 0px)); }
 
@@ -899,6 +930,8 @@ html { scroll-behavior: smooth; }
   .menu-links { margin: 0; max-width: none; gap: 0.4rem; }
   .menu-links li { flex: none; }
   .menu-solo-pc { display: block; }
+  .menu-links li.menu-musica-item { flex: none; margin-left: 0.6rem; }
+  .menu-musica { width: 32px; height: 32px; }
   .menu-links a {
     flex-direction: row;
     gap: 0.4rem;
@@ -950,6 +983,8 @@ html { scroll-behavior: smooth; }
   .section > .timeline { max-width: 520px; }
 
   .dresscode-body { max-width: 520px; font-size: 1.15rem; }
+  .chips { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .dresscode-section > .chips { max-width: 860px; }
   .rsvp-note { font-size: 1.35rem; }
   .gifts-text { font-size: 1.45rem; }
 

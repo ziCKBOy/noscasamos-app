@@ -29,6 +29,7 @@ setInterval(tick, 1000);
 const wrap    = document.getElementById('cassette');
 const cancion = document.getElementById('cancion');
 const hint    = document.getElementById('cassette-hint');
+const botonMusica = document.getElementById('menu-musica');
 let   timer   = null;
 
 // Animación corta de siempre (también si no hay archivo de música)
@@ -45,6 +46,8 @@ function marcarSonando(sonando) {
   wrap.setAttribute('aria-pressed', String(sonando));
   wrap.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
   hint.textContent = sonando ? '♪ sonando · ' + cancion.dataset.titulo : '♪ toca el casete';
+  botonMusica.setAttribute('aria-pressed', String(sonando));
+  botonMusica.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
 }
 
 async function alternarCancion() {
@@ -63,6 +66,7 @@ cancion.addEventListener('play',  () => marcarSonando(true));
 cancion.addEventListener('pause', () => marcarSonando(false));
 
 wrap.addEventListener('click', alternarCancion);
+botonMusica.addEventListener('click', alternarCancion);
 wrap.addEventListener('keydown', e => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
