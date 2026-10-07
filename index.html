@@ -29,9 +29,23 @@
 <body>
 
 <!-- ════════════════════════════════════════════ -->
+<!-- MENÚ: abajo en celular, arriba en PC          -->
+<!-- ════════════════════════════════════════════ -->
+<nav class="menu" id="menu" aria-label="Secciones de la invitación">
+  <a class="menu-marca" href="#inicio">Vivi <em>y</em> Oliver</a>
+  <ul class="menu-links">
+    <li><a href="#lugar"><span class="menu-icono" aria-hidden="true">📍</span><span>Lugar</span></a></li>
+    <li><a href="#programa"><span class="menu-icono" aria-hidden="true">🕕</span><span>Programa</span></a></li>
+    <li class="menu-solo-pc"><a href="#vestimenta"><span class="menu-icono" aria-hidden="true">👗</span><span>Vestimenta</span></a></li>
+    <li><a href="#confirmar"><span class="menu-icono" aria-hidden="true">✅</span><span>Confirmar</span></a></li>
+    <li><a href="#regalos"><span class="menu-icono" aria-hidden="true">🎁</span><span>Regalos</span></a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════════════════════════════ -->
 <!-- HERO                                          -->
 <!-- ════════════════════════════════════════════ -->
-<section class="hero">
+<section class="hero" id="inicio">
   <p class="para-invitado" id="para-label" hidden></p>
   <p class="hero-eyebrow">Te invitamos a nuestra boda</p>
 
@@ -166,7 +180,7 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- DETAILS                                       -->
 <!-- ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" id="lugar">
   <p class="eyebrow">Los detalles</p>
   <h2 class="section-title">¿Cuándo y dónde?</h2>
 
@@ -214,7 +228,7 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- ITINERARY                                     -->
 <!-- ════════════════════════════════════════════ -->
-<section class="section section-dark">
+<section class="section section-dark" id="programa">
   <p class="eyebrow">El programa</p>
   <h2 class="section-title">Itinerario de la noche</h2>
 
@@ -255,7 +269,7 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- DRESSCODE                                     -->
 <!-- ════════════════════════════════════════════ -->
-<section class="dresscode-section">
+<section class="dresscode-section" id="vestimenta">
   <p class="eyebrow">Código de vestimenta</p>
   <h2 class="section-title">¿Qué me pongo?</h2>
   <p class="dresscode-body">
@@ -271,7 +285,7 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- RSVP                                          -->
 <!-- ════════════════════════════════════════════ -->
-<section class="rsvp-section">
+<section class="rsvp-section" id="confirmar">
   <p class="eyebrow">Confirmación de asistencia</p>
   <h2 class="section-title">¿Vas a venir?</h2>
   <p class="rsvp-note">
@@ -290,7 +304,7 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- GIFTS                                         -->
 <!-- ════════════════════════════════════════════ -->
-<section class="gifts-section">
+<section class="gifts-section" id="regalos">
   <p class="eyebrow">Regalos</p>
   <h2 class="section-title">¿Y los regalos?</h2>
   <p class="gifts-text">
@@ -372,5 +386,6 @@
 <script src="js/lista.js"></script>
 <script src="js/main.js"></script>
 <script src="js/reveal.js"></script>
+<script src="js/menu.js"></script>
 </body>
 </html>

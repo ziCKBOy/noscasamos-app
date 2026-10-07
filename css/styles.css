@@ -750,6 +750,55 @@ footer {
 }
 .lista-modal .eyebrow { margin-top: 1.2rem; }
 
+/* ── MENÚ DE SECCIONES (js/menu.js) ───────── */
+html { scroll-behavior: smooth; }
+
+.menu {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 50;
+  background: rgba(245,237,208,0.94);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 18px rgba(26,18,64,0.08);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transform: translateY(110%);
+  transition: transform 0.35s ease;
+}
+.menu.visible { transform: none; }
+
+.menu-marca { display: none; }
+
+.menu-links {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.menu-links li { flex: 1; }
+.menu-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.55rem 0.2rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.menu-icono { font-size: 1.15rem; line-height: 1.2; }
+.menu-links a[aria-current] { color: var(--burgundy); font-weight: 500; }
+.menu-solo-pc { display: none; }
+
+/* En celular la barra va abajo: espacio para que no tape el pie de página */
+.menu ~ footer { padding-bottom: calc(3rem + 64px + env(safe-area-inset-bottom, 0px)); }
+
 /* ── APARICIÓN AL BAJAR (js/reveal.js) ────── */
 .reveal {
   opacity: 0;
@@ -773,6 +822,43 @@ footer {
 
 /* Tablet y PC */
 @media (min-width: 768px) {
+  /* Menú: barra delgada arriba */
+  .menu {
+    top: 0; bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    border-top: 0;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 18px rgba(26,18,64,0.08);
+    transform: translateY(-110%);
+  }
+  .menu-marca {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    color: var(--burgundy);
+    text-decoration: none;
+  }
+  .menu-marca em { color: var(--rose); }
+  .menu-links { margin: 0; max-width: none; gap: 0.4rem; }
+  .menu-links li { flex: none; }
+  .menu-solo-pc { display: block; }
+  .menu-links a {
+    flex-direction: row;
+    gap: 0.4rem;
+    padding: 1.05rem 0.8rem 0.95rem;
+    font-size: 0.74rem;
+    border-bottom: 2px solid transparent;
+  }
+  .menu-icono { font-size: 0.95rem; }
+  .menu-links a:hover { color: var(--burgundy); }
+  .menu-links a[aria-current] { border-bottom-color: var(--burgundy); }
+
+  section[id] { scroll-margin-top: 56px; }
+  .menu ~ footer { padding-bottom: 3rem; }
+
   .hero-names { font-size: 5.6rem; }
   .hero-date { font-size: 1rem; }
   .hero-tagline { font-size: 1.5rem; }
@@ -814,4 +900,9 @@ footer {
   .gifts-text { font-size: 1.45rem; }
 
   .footer-names { font-size: 2.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu { transition: none; }
 }
