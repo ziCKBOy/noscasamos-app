@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" fill="none">
+  <!-- Formas estilo Memphis (años 80) para la esquina superior izquierda -->
+  <polyline points="18,62 38,38 58,62 78,38 98,62 118,38" stroke="#2AACBF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#F0C030">
+    <circle cx="30" cy="110" r="3.5"/><circle cx="48" cy="110" r="3.5"/><circle cx="66" cy="110" r="3.5"/>
+    <circle cx="30" cy="128" r="3.5"/><circle cx="48" cy="128" r="3.5"/><circle cx="66" cy="128" r="3.5"/>
+    <circle cx="30" cy="146" r="3.5"/><circle cx="48" cy="146" r="3.5"/><circle cx="66" cy="146" r="3.5"/>
+  </g>
+  <circle cx="150" cy="92" r="14" stroke="#E04060" stroke-width="4"/>
+  <path d="M118 170 l18 -26 l18 26 z" fill="#F08A28" opacity="0.8"/>
+</svg>

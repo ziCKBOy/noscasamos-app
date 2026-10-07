@@ -49,7 +49,7 @@
       <button type="button" class="menu-musica" id="menu-musica"
               aria-pressed="false" aria-label="Música: Stairway to Heaven, de Led Zeppelin">
         <svg class="icono-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z" fill="currentColor"/></svg>
-        <svg class="icono-pausa" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 3h2.6v10H4.5zM8.9 3h2.6v10H8.9z" fill="currentColor"/></svg>
+        <span class="icono-eq" aria-hidden="true"><i></i><i></i><i></i></span>
       </button>
     </li>
   </ul>
@@ -177,17 +177,72 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- PHOTO                                         -->
 <!-- ════════════════════════════════════════════ -->
-<section class="photo-section">
-  <div class="photo-frame">
-    <img src="assets/vivi-y-oliver.jpg" alt="Foto de Vivi y Oliver juntos, abrazados y sonriendo a la cámara" loading="eager"/>
+<section class="photo-section" aria-label="Fotos de Vivi y Oliver">
+  <!-- Marco de radio casetera de los 80; la galería va al centro -->
+  <div class="radio">
+    <div class="radio-antena" aria-hidden="true"></div>
+    <div class="radio-asa" aria-hidden="true"></div>
+    <div class="radio-cuerpo">
+      <!-- Dial de radio FM con perillas -->
+      <div class="radio-dial" aria-hidden="true">
+        <span class="radio-perilla"></span>
+        <div class="dial">
+          <span class="dial-fm">FM</span>
+          <span class="dial-escala">88&nbsp;&nbsp;92&nbsp;&nbsp;96&nbsp;&nbsp;100&nbsp;&nbsp;104&nbsp;&nbsp;108</span>
+          <span class="dial-aguja"></span>
+        </div>
+        <span class="radio-perilla"></span>
+      </div>
+      <div class="radio-centro">
+      <div class="radio-parlante" aria-hidden="true"></div>
+  <!-- Galería: las fotos se alternan con un fundido cada pocos segundos -->
+  <div class="photo-frame" id="galeria">
+    <img class="foto activa" src="assets/vivi-y-oliver.jpg" loading="eager"
+         alt="Foto de Vivi y Oliver juntos, abrazados y sonriendo a la cámara"/>
+    <img class="foto" src="assets/foto-playa.jpg" loading="lazy"
+         alt="Selfie de Vivi y Oliver en una playa de arena blanca con rocas, bajo un cielo azul; ella sonríe con lentes y él lleva lentes de sol"/>
+    <img class="foto" src="assets/foto-restaurante.jpg" loading="lazy"
+         alt="Foto en blanco y negro de Vivi y Oliver almorzando en un restaurante, junto a una ventana"/>
+    <img class="foto" src="assets/foto-rio.jpg" loading="lazy"
+         alt="Selfie junto a un río en medio del bosque; Vivi le da un beso en la mejilla a Oliver"/>
+    <img class="foto" src="assets/foto-bar.jpg" loading="lazy"
+         alt="Vivi y Oliver sonriendo en un bar, con vasos de cerveza sobre la mesa"/>
+    <img class="foto" src="assets/foto-plaza.jpg" loading="lazy" style="object-position: center 60%"
+         alt="Vivi lee un libro sentada en una banca de plaza mientras Oliver descansa recostado en su regazo, con lentes de sol"/>
+    <img class="foto" src="assets/foto-lago.jpg" loading="lazy"
+         alt="Vivi y Oliver sentados al aire libre en una playa de piedras, con árboles y cerros detrás"/>
+    <img class="foto" src="assets/foto-cafe.jpg" loading="lazy"
+         alt="Vivi y Oliver tomando café en un bar antiguo con paredes llenas de firmas"/>
+    <img class="foto" src="assets/foto-sol.jpg" loading="lazy"
+         alt="Selfie de Vivi y Oliver abrazados en un día soleado, con cielo azul y árboles de fondo"/>
+    <img class="foto" src="assets/foto-palmeras.jpg" loading="lazy"
+         alt="Selfie de Vivi y Oliver abrazados bajo palmeras en una playa tropical"/>
+    <img class="foto" src="assets/foto-mar.jpg" loading="lazy"
+         alt="Vivi y Oliver, ambos con lentes, sonriendo juntos en un restaurante frente al mar"/>
   </div>
+      <div class="radio-parlante" aria-hidden="true"></div>
+      </div>
+      <!-- Teclas de piano y luces -->
+      <div class="radio-teclas" role="group" aria-label="Controles de la radio">
+        <span class="radio-led" aria-hidden="true"></span>
+        <button type="button" class="tecla tecla-rec" id="tecla-rec" aria-label="Grabar recuerdos"><span aria-hidden="true">●</span></button>
+        <button type="button" class="tecla" id="tecla-anterior" aria-label="Foto anterior"><span aria-hidden="true">◀◀</span></button>
+        <button type="button" class="tecla tecla-play" id="tecla-play" aria-label="Reproducir canción"><span aria-hidden="true">▶</span></button>
+        <button type="button" class="tecla" id="tecla-siguiente" aria-label="Foto siguiente"><span aria-hidden="true">▶▶</span></button>
+        <button type="button" class="tecla tecla-stop" id="tecla-stop" aria-label="Detener canción"><span aria-hidden="true">■</span></button>
+        <span class="radio-led" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+  <!-- Los puntos se generan según la cantidad de fotos (js/main.js) -->
+  <div class="galeria-puntos" id="galeria-puntos"></div>
 </section>
 
 <!-- ════════════════════════════════════════════ -->
 <!-- COUNTDOWN                                     -->
 <!-- ════════════════════════════════════════════ -->
 <section class="countdown" aria-label="Cuenta regresiva">
-  <p class="countdown-label">El gran día se acerca</p>
+  <p class="countdown-label"><span class="rec" aria-hidden="true"><span class="rec-punto"></span>REC</span>El gran día se acerca</p>
   <p class="sr-only" id="cd-texto">Faltan pocos días para la boda.</p>
   <div class="countdown-grid" aria-hidden="true">
     <div class="cd-unit">
@@ -218,7 +273,7 @@
 <!-- DETAILS                                       -->
 <!-- ════════════════════════════════════════════ -->
 <section class="section" id="lugar">
-  <p class="eyebrow">Los detalles</p>
+  <p class="eyebrow">Pista 1 · Los detalles</p>
   <h2 class="section-title">¿Cuándo y dónde?</h2>
 
   <div class="detail-list">
@@ -266,7 +321,7 @@
 <!-- ITINERARY                                     -->
 <!-- ════════════════════════════════════════════ -->
 <section class="section section-dark" id="programa">
-  <p class="eyebrow">El programa</p>
+  <p class="eyebrow">Pista 2 · El programa</p>
   <h2 class="section-title">Itinerario de la noche</h2>
 
   <div class="timeline">
@@ -307,7 +362,7 @@
 <!-- DRESSCODE                                     -->
 <!-- ════════════════════════════════════════════ -->
 <section class="dresscode-section" id="vestimenta">
-  <p class="eyebrow">Código de vestimenta</p>
+  <p class="eyebrow">Pista 3 · Código de vestimenta</p>
   <h2 class="section-title">¿Qué me pongo?</h2>
   <p class="dresscode-body">
     Queremos que te sientas a gusto y que vengas como mejor te sientas, pero si nos solicitas alguna referencia, nuestra recomendación es que asistas <strong>semiformal</strong>: pantalón o vestido largo/corto; chaqueta y pantalón de tela sin corbata.
@@ -323,7 +378,7 @@
 <!-- RSVP                                          -->
 <!-- ════════════════════════════════════════════ -->
 <section class="rsvp-section" id="confirmar">
-  <p class="eyebrow">Confirmación de asistencia</p>
+  <p class="eyebrow">Pista 4 · Confirmación</p>
   <h2 class="section-title">¿Vas a venir?</h2>
   <p class="rsvp-note">
     ¡Necesitamos saber si estarás!<br>
@@ -342,7 +397,7 @@
 <!-- GIFTS                                         -->
 <!-- ════════════════════════════════════════════ -->
 <section class="gifts-section" id="regalos">
-  <p class="eyebrow">Regalos</p>
+  <p class="eyebrow">Lado B · Regalos</p>
   <h2 class="section-title">¿Y los regalos?</h2>
   <p class="gifts-text">
     Nuestro mejor regalo<br>es tu presencia ♡<br>
@@ -430,6 +485,9 @@
   <div class="footer-names">Vivi y Oliver</div>
   <div class="footer-sub">13 · 02 · 2027 · Ñuñoa, Santiago</div>
   <div class="footer-hearts" aria-hidden="true">♡ ♡ ♡</div>
+  <a class="footer-cinta" href="#inicio">
+    Fin del Lado A · dale vuelta al casete <span aria-hidden="true">↻</span><span class="sr-only"> (volver al inicio)</span>
+  </a>
 </footer>
 
 <script src="js/lista.js"></script>

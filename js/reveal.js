@@ -7,7 +7,7 @@
 
   // Bloques que aparecen enteros
   const bloques = document.querySelectorAll(
-    '.photo-frame, .countdown-grid, .section-title, .rsvp-note, .gifts-text, ' +
+    '.radio, .countdown-grid, .section-title, .rsvp-note, .gifts-text, ' +
     '.dresscode-body, .footer-names'
   );
   // Grupos cuyos elementos aparecen uno tras otro

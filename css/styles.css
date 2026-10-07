@@ -59,6 +59,30 @@ body {
   position: relative;
 }
 
+/* Formas geométricas estilo Memphis (años 80), tenues, en las esquinas */
+.hero, footer { position: relative; isolation: isolate; }
+.hero::before,
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+/* En celular: pequeñas y pegadas a los bordes para no tocar el texto */
+.hero::before {
+  background:
+    url(../assets/memphis-a.svg) left 2px top 4px / 84px no-repeat,
+    url(../assets/memphis-b.svg) right 2px bottom 18px / 84px no-repeat;
+  opacity: 0.4;
+}
+footer::before {
+  background:
+    url(../assets/memphis-a.svg) left 4px top 20px / 64px no-repeat,
+    url(../assets/memphis-b.svg) right 4px top 20px / 64px no-repeat;
+  opacity: 0.3;
+}
+
 .hero::after {
   content: '';
   position: absolute;
@@ -232,30 +256,254 @@ body {
 }
 
 /* Todos los textos en sección oscura en claro */
+/* (sin "span": los textos del dial de la radio tienen su propio color) */
 .photo-section .eyebrow,
 .photo-section .section-title,
 .photo-section p,
-.photo-section span,
 .photo-section h2 {
   color: #F5EDD0 !important;
 }
 .photo-section .eyebrow { color: rgba(245,237,208,0.85) !important; }
 
-.photo-frame {
-  width: min(300px, 100%);
-  aspect-ratio: 300 / 222;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.55);
-  box-shadow: 0 0 0 7px rgba(255,255,255,0.12), 0 16px 40px rgba(0,0,0,0.30);
-  flex-shrink: 0;
+/* ── RADIO CASETERA DE LOS 80 (marco de la galería) ──
+   "Metal" = marfil de la etiqueta; cuerpo = azul noche; acentos del casete. */
+.radio {
+  --metal: #F5EDD0;
+  --metal-sombra: #C9BF9C;
+  position: relative;
+  width: min(400px, 100%);
+  padding-top: 30px;                    /* espacio para asa y antena */
+}
+.radio-antena {
+  position: absolute;
+  top: -26px; right: 15%;
+  width: 3px; height: 84px;
+  background: linear-gradient(90deg, var(--metal-sombra), var(--metal), var(--metal-sombra));
+  border-radius: 2px;
+  transform: rotate(28deg);
+  transform-origin: bottom center;
+}
+.radio-antena::before {                  /* punta de la antena */
+  content: '';
+  position: absolute;
+  top: -5px; left: -3px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--metal);
+}
+.radio-asa {
+  position: absolute;
+  top: 6px; left: 24%; right: 24%;
+  height: 36px;
+  border: 6px solid var(--metal);
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  box-shadow: inset 0 2px 0 var(--metal-sombra);
+}
+.radio-cuerpo {
+  position: relative;
+  padding: 10px 10px 8px;
+  background: linear-gradient(180deg, #2A2158 0%, var(--dark) 18%, var(--dark) 100%);
+  border-radius: 14px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.32),
+    inset 0 0 0 2px rgba(245,237,208,0.18);
 }
 
+/* Dial FM */
+.radio-dial {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+.radio-perilla {
+  flex: 0 0 auto;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--dark), var(--dark)) center top 3px / 2px 7px no-repeat,
+    radial-gradient(circle at 35% 30%, #FFFFFF, var(--metal) 45%, var(--metal-sombra));
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35);
+}
+.dial {
+  position: relative;
+  flex: 1;
+  height: 24px;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(90deg, rgba(26,18,64,0.55) 0 1px, transparent 1px 7px) left bottom / 100% 5px no-repeat,
+    var(--light-peach);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.35);
+  overflow: hidden;
+  font-family: 'Jost', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--dark);
+  letter-spacing: 0.04em;
+}
+.dial-fm {
+  position: absolute;
+  left: 6px; top: 3px;
+  color: var(--rose-btn);
+  font-weight: 600;
+}
+.dial-escala {
+  position: absolute;
+  left: 26px; right: 6px; top: 3px;
+  text-align: center;
+  white-space: nowrap;
+}
+.dial-aguja {
+  position: absolute;
+  top: 2px; bottom: 2px;
+  left: 62%;
+  width: 2px;
+  background: var(--rose);
+  box-shadow: 0 0 4px rgba(224,64,96,0.7);
+  transition: left 1.2s ease;
+}
+
+/* Parlantes + foto (ventana del casete) */
+.radio-centro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.radio-parlante {
+  flex: 0 0 auto;
+  width: 46px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #3A3070 0 14%, #0D0A24 15% 21%, transparent 22%),
+    radial-gradient(circle, transparent 0 58%, rgba(245,237,208,0.25) 59% 61%, transparent 62%),
+    radial-gradient(circle, rgba(42,172,191,0.9) 1.1px, transparent 1.5px) 0 0 / 5px 5px,
+    #120C30;
+  box-shadow:
+    0 0 0 3px var(--metal),
+    0 0 0 5px var(--metal-sombra),
+    inset 0 3px 6px rgba(0,0,0,0.6);
+  margin: 6px 4px;
+}
+
+/* Teclas de piano */
+.radio-teclas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 9px;
+}
+.tecla {
+  width: 32px;
+  padding: 6px 0 5px;
+  border: 0;
+  border-radius: 2px 2px 4px 4px;
+  background: linear-gradient(180deg, #FFFFFF, var(--metal) 40%, var(--metal-sombra));
+  border-top: 3px solid var(--peach);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.45);
+  font-family: inherit;
+  font-size: 8px;
+  line-height: 1;
+  color: var(--dark);
+  text-align: center;
+  letter-spacing: -1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .08s, box-shadow .08s, filter .15s;
+}
+.tecla:hover { filter: brightness(1.04); }
+/* Al presionar, la tecla se hunde */
+.tecla:active { transform: translateY(3px); box-shadow: 0 0 0 rgba(0,0,0,0.45); }
+.tecla:focus-visible { outline: 2px solid var(--citric); outline-offset: 2px; }
+.tecla-rec  { color: var(--rose); border-top-color: var(--rose); }
+.tecla-play { border-top-color: var(--burgundy); }
+.tecla-stop { border-top-color: var(--citric); }
+/* Mientras suena, ▶ queda hundida como en una casetera real */
+.musica-sonando .tecla-play {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 rgba(0,0,0,0.45);
+  filter: brightness(0.92);
+}
+/* Guiño de la tecla ● */
+.dial.grabando .dial-escala { color: var(--rose-btn); letter-spacing: 0.12em; font-weight: 600; }
+.dial.grabando .dial-aguja { opacity: 0; }
+.radio-cuerpo.grabando .radio-led:first-child {
+  background: var(--rose);
+  box-shadow: 0 0 6px var(--rose);
+  animation: led 0.5s steps(1) infinite;
+}
+.radio-led {
+  width: 7px; height: 7px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background: #4A1A2A;
+}
+
+/* Con la canción sonando: parlantes laten, LEDs encienden, aguja se mueve */
+.musica-sonando .radio-parlante { animation: bombo 0.62s ease-in-out infinite; }
+/* Con el analizador de audio activo, el movimiento sigue a la canción */
+.ritmo-real .radio-parlante { transform: scale(var(--golpe, 1)); }
+.ritmo-real.musica-sonando .radio-parlante { animation: none; }
+.ritmo-real.musica-sonando .radio-led {
+  animation: none;
+  opacity: calc(0.25 + var(--graves, 0) * 0.75);
+}
+.ritmo-real.musica-sonando .radio-led:last-child { opacity: calc(0.25 + var(--agudos, 0) * 0.75); }
+.musica-sonando .radio-led { background: var(--rose); box-shadow: 0 0 6px var(--rose); animation: led 0.9s steps(1) infinite; }
+.musica-sonando .radio-led:last-child { background: var(--citric); box-shadow: 0 0 6px var(--citric); animation-delay: -0.45s; }
+.musica-sonando .dial-aguja { left: 40%; }
+@keyframes bombo { 50% { transform: scale(1.05); } }
+@keyframes led { 50% { opacity: 0.35; } }
+
+.photo-frame {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 300 / 222;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid var(--citric);     /* como el borde de la ventana del casete */
+}
+
+.photo-frame { position: relative; }
 .photo-frame img {
+  position: absolute;
+  inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
 }
+.photo-frame img.activa { opacity: 1; }
+
+/* Puntos para elegir foto */
+.galeria-puntos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  margin-top: 1.1rem;
+}
+.galeria-punto {
+  width: 24px; height: 28px;           /* área táctil cómoda */
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.galeria-punto::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  transition: background .25s, transform .25s;
+}
+.galeria-punto[aria-current="true"]::before { background: #fff; transform: scale(1.25); }
+.galeria-punto:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 50%; }
 
 
 /* ── COUNTDOWN ─────────────────────────────── */
@@ -264,6 +512,25 @@ body {
   padding: 2.8rem 1.5rem;
   text-align: center;
 }
+
+/* "● REC" como en la pantalla de una grabadora de los 80 */
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-right: 0.9rem;
+  color: var(--rose);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+}
+.rec-punto {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 8px rgba(224,64,96,0.8);
+  animation: rec 1.2s steps(1) infinite;
+}
+@keyframes rec { 50% { opacity: 0; } }
 
 .countdown-label {
   font-family: 'Jost', sans-serif;
@@ -722,6 +989,20 @@ footer {
   margin-top: 0.8rem;
 }
 
+.footer-cinta {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(250,243,236,0.7);
+  text-decoration: underline;
+  text-decoration-color: rgba(240,192,48,0.45);
+  text-underline-offset: 4px;
+  transition: color .2s;
+}
+.footer-cinta:hover { color: var(--citric); }
+
 .footer-hearts {
   margin-top: 1.2rem;
   color: var(--citric);
@@ -913,10 +1194,31 @@ html { scroll-behavior: smooth; }
   transition: background .2s, color .2s;
 }
 .menu-musica svg { width: 14px; height: 14px; }
-.menu-musica .icono-pausa { display: none; }
+.menu-musica .icono-eq { display: none; }
 .menu-musica[aria-pressed="true"] { background: var(--teal-texto); color: #fff; }
-.menu-musica[aria-pressed="true"] .icono-play  { display: none; }
-.menu-musica[aria-pressed="true"] .icono-pausa { display: block; }
+.menu-musica[aria-pressed="true"] .icono-play { display: none; }
+.menu-musica[aria-pressed="true"] .icono-eq   { display: flex; }
+
+/* Ecualizador ochentero: tres barras que suben y bajan mientras suena */
+.icono-eq {
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+}
+.icono-eq i {
+  width: 3px;
+  height: 100%;
+  border-radius: 1px;
+  background: currentColor;
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+.icono-eq i:nth-child(2) { animation-delay: -0.3s; animation-duration: 0.7s; }
+.icono-eq i:nth-child(3) { animation-delay: -0.6s; animation-duration: 1.1s; }
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50%      { transform: scaleY(1); }
+}
 .menu-musica:focus-visible { outline: 2px solid var(--rose-btn); outline-offset: 2px; }
 
 /* En celular la barra va abajo: espacio para que no tape el pie de página */
@@ -1005,11 +1307,34 @@ html { scroll-behavior: smooth; }
   .menu ~ footer { padding-bottom: 3rem; }
 
   .hero-names { font-size: 5.6rem; }
+  .hero::before {
+    background:
+      url(../assets/memphis-a.svg) left 4% top 40px / 210px no-repeat,
+      url(../assets/memphis-b.svg) right 4% bottom 40px / 210px no-repeat;
+  }
+  footer::before {
+    background:
+      url(../assets/memphis-b.svg) right 6% top 24px / 140px no-repeat,
+      url(../assets/memphis-a.svg) left 6% bottom 18px / 140px no-repeat;
+  }
   .hero-date { font-size: 1rem; }
   .hero-tagline { font-size: 1.5rem; }
 
   .photo-section { padding: 4.5rem 2rem; }
-  .photo-frame { width: 460px; }
+  .radio { width: 720px; padding-top: 40px; }
+  .radio-antena { height: 130px; top: -44px; width: 4px; }
+  .radio-asa { top: 8px; height: 50px; border-width: 9px; border-radius: 20px 20px 0 0; }
+  .radio-cuerpo { padding: 16px 20px 14px; border-radius: 20px; }
+  .radio-dial { gap: 14px; margin-bottom: 14px; }
+  .radio-perilla { width: 34px; height: 34px; }
+  .dial { height: 32px; font-size: 11px; }
+  .dial-fm { left: 10px; top: 5px; }
+  .dial-escala { left: 40px; top: 5px; }
+  .radio-centro { gap: 18px; }
+  .radio-parlante { width: 104px; margin: 10px 8px; }
+  .radio-teclas { gap: 6px; margin-top: 14px; }
+  .tecla { width: 50px; font-size: 11px; padding: 8px 0 7px; }
+  .radio-led { width: 9px; height: 9px; margin: 0 10px; }
 
   .countdown { padding: 3.5rem 2rem; }
   .countdown-grid { gap: 3.5rem; }
@@ -1053,5 +1378,11 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   .brillo { animation: none; opacity: 0; }
   .barra-progreso span { animation: none; width: 100%; opacity: 0.5; }
+  .icono-eq i { animation: none; }
+  .icono-eq i:nth-child(1) { transform: scaleY(0.5); }
+  .icono-eq i:nth-child(3) { transform: scaleY(0.7); }
+  .rec-punto { animation: none; }
+  .musica-sonando .radio-parlante,
+  .musica-sonando .radio-led { animation: none; }
   .menu { transition: none; }
 }

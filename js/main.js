@@ -51,6 +51,7 @@ function animarCasete() {
 
 function marcarSonando(sonando) {
   wrap.classList.toggle('sonando', sonando);
+  document.documentElement.classList.toggle('musica-sonando', sonando);
   wrap.setAttribute('aria-pressed', String(sonando));
   hint.textContent = sonando ? '♪ sonando · ' + cancion.dataset.titulo : '♪ toca el casete';
   botonMusica.setAttribute('aria-pressed', String(sonando));
@@ -61,6 +62,10 @@ async function alternarCancion() {
     cancion.pause();
     return;
   }
+  // El contexto de audio se activa aquí, dentro del toque: Safari en iPhone
+  // solo lo permite así, y sin él la canción sonaría muda.
+  prepararAnalizador();
+  if (audioCtx && audioCtx.state !== 'running') audioCtx.resume();
   try {
     await cancion.play();
   } catch {
@@ -68,8 +73,82 @@ async function alternarCancion() {
   }
 }
 
-cancion.addEventListener('play',  () => marcarSonando(true));
+cancion.addEventListener('play',  () => { marcarSonando(true); iniciarRitmo(); });
 cancion.addEventListener('pause', () => marcarSonando(false));
+
+/* Parlantes al ritmo de la canción: el analizador de audio del navegador mide
+   graves y agudos en cada fotograma. Si no está disponible, queda el latido CSS. */
+const radio = document.querySelector('.radio');
+const movimientoReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let audioCtx = null;
+let analizador = null;
+let espectro = null;
+
+function prepararAnalizador() {
+  if (audioCtx || movimientoReducido) return;
+  const Contexto = window.AudioContext || window.webkitAudioContext;
+  if (!Contexto) return;
+  try {
+    audioCtx = new Contexto();
+    const fuente = audioCtx.createMediaElementSource(cancion);
+    analizador = audioCtx.createAnalyser();
+    analizador.fftSize = 512;
+    analizador.smoothingTimeConstant = 0.55;
+    fuente.connect(analizador);
+    analizador.connect(audioCtx.destination);
+    espectro = new Uint8Array(analizador.frequencyBinCount);
+  } catch {
+    audioCtx = null;
+    analizador = null;
+  }
+}
+
+// Promedio de un rango de bandas, de 0 a 1
+function nivel(desde, hasta) {
+  let suma = 0;
+  for (let i = desde; i < hasta; i++) suma += espectro[i];
+  return suma / ((hasta - desde) * 255);
+}
+
+function iniciarRitmo() {
+  prepararAnalizador();
+  if (!analizador) return;
+  audioCtx.resume();
+  document.documentElement.classList.add('ritmo-real');
+  let promedioGraves = null;  // parte desde la primera medición
+  let promedioAgudos = null;
+  let anterior = performance.now();
+
+  const cuadro = (ahora) => {
+    if (cancion.paused) {
+      radio.style.setProperty('--golpe', 1);
+      radio.style.setProperty('--graves', 0);
+      radio.style.setProperty('--agudos', 0);
+      return;
+    }
+    analizador.getByteFrequencyData(espectro);
+    // Con fftSize 512 cada banda mide ~94 Hz (a 48 kHz): 1–11 ≈ bajo y cuerpo
+    // de la guitarra; 40–120 ≈ agudos
+    const graves = nivel(1, 12);
+    const agudos = nivel(40, 120);
+    // El golpe es lo que el sonido sube sobre su promedio reciente: así el
+    // parlante late con cada ataque (rasgueo, nota fuerte, bombo) y no queda
+    // inflado cuando la canción simplemente suena fuerte.
+    // Promedio por tiempo (~0,25 s), igual a 60 o a 20 cuadros por segundo
+    if (promedioGraves === null) { promedioGraves = graves; promedioAgudos = agudos; }
+    const peso = 1 - Math.exp(-Math.min(0.5, (ahora - anterior) / 1000) / 0.25);
+    anterior = ahora;
+    promedioGraves += (graves - promedioGraves) * peso;
+    promedioAgudos += (agudos - promedioAgudos) * peso;
+    const golpe = Math.min(1, Math.max(0, graves - promedioGraves) * 9);
+    const brillo = Math.min(1, Math.max(0, agudos - promedioAgudos) * 12);
+    radio.style.setProperty('--golpe', (1 + golpe * 0.08).toFixed(3));
+    radio.style.setProperty('--graves', golpe.toFixed(2));
+    radio.style.setProperty('--agudos', brillo.toFixed(2));
+    requestAnimationFrame(cuadro);
+  };
+  requestAnimationFrame(cuadro);
+}
 
 wrap.addEventListener('click', alternarCancion);
 botonMusica.addEventListener('click', alternarCancion);
@@ -190,3 +269,89 @@ document.getElementById('lista-volver').addEventListener('click', () => {
   giftModal.showModal();
 });
 cerrarAlTocarFuera(listaModal);
+
+/* Galería de fotos: alterna cada 6 s; se detiene si el invitado elige una foto
+   o si el teléfono pide reducir el movimiento. */
+const galeria = (function () {
+  const fotos = [...document.querySelectorAll('#galeria .foto')];
+  const contenedorPuntos = document.getElementById('galeria-puntos');
+  const puntos = fotos.map((_, i) => {
+    const punto = document.createElement('button');
+    punto.type = 'button';
+    punto.className = 'galeria-punto';
+    punto.setAttribute('aria-label', 'Ver foto ' + (i + 1) + ' de ' + fotos.length);
+    if (i === 0) punto.setAttribute('aria-current', 'true');
+    contenedorPuntos.append(punto);
+    return punto;
+  });
+  let actual = 0;
+  let intervalo = null;
+
+  // Precarga la foto siguiente para que el fundido nunca muestre un hueco
+  const precargar = i => { fotos[(i + 1) % fotos.length].loading = 'eager'; };
+  precargar(0);
+
+  function mostrar(i) {
+    fotos[actual].classList.remove('activa');
+    puntos[actual].removeAttribute('aria-current');
+    actual = i;
+    fotos[actual].loading = 'eager';
+    fotos[actual].classList.add('activa');
+    puntos[actual].setAttribute('aria-current', 'true');
+    precargar(actual);
+  }
+
+  puntos.forEach((punto, i) => punto.addEventListener('click', () => {
+    clearInterval(intervalo); // si eligen una foto, se queda en ella
+    mostrar(i);
+  }));
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    intervalo = setInterval(() => {
+      if (!document.hidden) mostrar((actual + 1) % fotos.length);
+    }, 6000);
+  }
+
+  // Para las teclas ◀◀ / ▶▶ de la radio
+  function mover(paso) {
+    clearInterval(intervalo);
+    mostrar((actual + paso + fotos.length) % fotos.length);
+    return actual + 1;
+  }
+  return { anterior: () => mover(-1), siguiente: () => mover(1), total: fotos.length };
+})();
+
+/* Teclas de la radio */
+(function () {
+  const cuerpo = document.querySelector('.radio-cuerpo');
+  const dial = document.querySelector('.dial');
+  const escala = document.querySelector('.dial-escala');
+  const escalaOriginal = escala.innerHTML;
+  let grabando = null;
+
+  document.getElementById('tecla-play').addEventListener('click', () => {
+    if (cancion.paused) alternarCancion();
+  });
+  document.getElementById('tecla-stop').addEventListener('click', () => {
+    cancion.pause();
+    cancion.currentTime = 0; // rebobinar
+  });
+  document.getElementById('tecla-anterior').addEventListener('click', () => {
+    avisarLector('Foto ' + galeria.anterior() + ' de ' + galeria.total);
+  });
+  document.getElementById('tecla-siguiente').addEventListener('click', () => {
+    avisarLector('Foto ' + galeria.siguiente() + ' de ' + galeria.total);
+  });
+  document.getElementById('tecla-rec').addEventListener('click', () => {
+    clearTimeout(grabando);
+    escala.textContent = '♥ GRABANDO RECUERDOS ♥';
+    dial.classList.add('grabando');
+    cuerpo.classList.add('grabando');
+    avisarLector('Grabando recuerdos ♥');
+    grabando = setTimeout(() => {
+      escala.innerHTML = escalaOriginal;
+      dial.classList.remove('grabando');
+      cuerpo.classList.remove('grabando');
+    }, 2600);
+  });
+})();
