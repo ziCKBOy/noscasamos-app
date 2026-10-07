@@ -931,6 +931,25 @@ html { scroll-behavior: smooth; }
   .menu-links li { flex: none; }
   .menu-solo-pc { display: block; }
   .menu-links li.menu-musica-item { flex: none; margin-left: 0.6rem; }
+
+  /* Ventana de regalos en dos columnas para que no necesite scroll */
+  .gift-modal:not(.lista-modal) { width: min(840px, calc(100% - 4rem)); padding: 2.6rem 2.4rem 2.4rem; }
+  .gift-cols {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 0.6rem;
+  }
+  .gift-col > :last-child { margin-bottom: 0; }
+  .gift-divider-cols {
+    flex-direction: column;
+    align-self: stretch;
+    margin: 0;
+  }
+  .gift-divider-cols::before,
+  .gift-divider-cols::after { width: 1px; height: auto; }
+  .gift-divider-cols span { writing-mode: vertical-rl; transform: rotate(180deg); }
   .menu-musica { width: 32px; height: 32px; }
   .menu-links a {
     flex-direction: row;
