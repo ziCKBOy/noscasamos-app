@@ -107,6 +107,21 @@ body {
 .note-2 { right: 15%; top: 20%; }
 .note-3 { left:  40%; top: 5%; }
 
+/* Mientras suena la canción: bobinas rápidas y notas en bucle */
+.cassette-wrap.sonando .reel { animation-duration: 0.85s; }
+.cassette-wrap.sonando .note-1 { animation: noteUp 1.6s ease-out 0.0s infinite; }
+.cassette-wrap.sonando .note-2 { animation: noteUp 1.6s ease-out 0.5s infinite; }
+.cassette-wrap.sonando .note-3 { animation: noteUp 1.6s ease-out 1.0s infinite; }
+.cassette-wrap:focus-visible { outline: 2px solid var(--burgundy); outline-offset: 6px; border-radius: 16px; }
+
+.cassette-hint {
+  margin: -1.8rem 0 2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
 @keyframes noteUp {
   0%   { opacity:0; transform:translateY(0) scale(.7); }
   25%  { opacity:1; }
@@ -327,6 +342,15 @@ body {
   border-bottom: 1px solid rgba(206,140,126,0.35);
   padding-bottom: 1px;
 }
+
+.d-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+}
+.d-links .map-link { margin-top: 0; }
 
 /* ── TIMELINE ──────────────────────────────── */
 .timeline { position: relative; padding-left: 2.4rem; }
@@ -751,6 +775,7 @@ footer {
     text-align: center;
     padding: 1.8rem 1.4rem;
   }
+  .d-links { align-items: center; }
 
   .section > .timeline { max-width: 520px; }
 

@@ -1,0 +1,2 @@
+# El calendario (.ics) debe conservar sus saltos de línea CRLF
+*.ics -text

@@ -24,16 +24,49 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-/* Cassette tap */
-const wrap  = document.getElementById('cassette');
-let   timer = null;
+/* Casete: toca para reproducir o pausar nuestra canción */
+const wrap    = document.getElementById('cassette');
+const cancion = document.getElementById('cancion');
+const hint    = document.getElementById('cassette-hint');
+let   timer   = null;
 
-wrap.addEventListener('click', () => {
+// Animación corta de siempre (también si no hay archivo de música)
+function animarCasete() {
   wrap.classList.remove('playing');
   void wrap.offsetWidth;
   wrap.classList.add('playing');
   clearTimeout(timer);
   timer = setTimeout(() => wrap.classList.remove('playing'), 4000);
+}
+
+function marcarSonando(sonando) {
+  wrap.classList.toggle('sonando', sonando);
+  wrap.setAttribute('aria-pressed', String(sonando));
+  wrap.setAttribute('aria-label', sonando ? 'Pausar nuestra canción' : 'Reproducir nuestra canción');
+  hint.textContent = sonando ? '♪ sonando · toca para pausar' : '♪ toca el casete';
+}
+
+async function alternarCancion() {
+  if (!cancion.paused) {
+    cancion.pause();
+    return;
+  }
+  try {
+    await cancion.play();
+  } catch {
+    animarCasete(); // sin archivo o el navegador no pudo reproducirlo
+  }
+}
+
+cancion.addEventListener('play',  () => marcarSonando(true));
+cancion.addEventListener('pause', () => marcarSonando(false));
+
+wrap.addEventListener('click', alternarCancion);
+wrap.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    alternarCancion();
+  }
 });
 
 // ── PERSONALIZACIÓN POR URL (#para=Nombre o ?para=Nombre) ──

@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Vivi y Oliver//Invitacion//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:boda-vivi-y-oliver-20270213@noscasamos-app.vercel.app
+DTSTAMP:20261007T000000Z
+DTSTART:20270213T210000Z
+DTEND:20270214T050000Z
+SUMMARY:Matrimonio Vivi y Oliver 💍
+LOCATION:Club Suizo\, Dublé Almeyda 2191\, Ñuñoa\, Santiago
+DESCRIPTION:Ceremonia 18:00 (puntual). Fiesta hasta las 02:00.\nInvitaci
+ ón: https://noscasamos-app.vercel.app/
+URL:https://noscasamos-app.vercel.app/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana es el matrimonio de Vivi y Oliver 💍
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+END:VCALENDAR
