@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vivi y Oliver · 13.02.2027</title>
+  <meta name="description" content="Te invitamos a nuestra boda. Sábado 13 de febrero de 2027, Club Suizo, Ñuñoa, Santiago.">
+  <meta name="theme-color" content="#2AACBF">
+
+  <!-- Vista previa al compartir por WhatsApp / redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Vivi y Oliver · ¡Nos casamos!">
+  <meta property="og:description" content="Sábado 13 de febrero de 2027 · 18:00 hrs · Club Suizo, Ñuñoa">
+  <meta property="og:image" content="assets/vivi-y-oliver.jpg">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- HERO                                          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="hero">
+  <p class="para-invitado" id="para-label" hidden></p>
+  <p class="hero-eyebrow">Te invitamos a nuestra boda</p>
+
+  <div class="cassette-wrap" id="cassette" title="Toca para reproducir">
+    <span class="note note-1">♪</span>
+    <span class="note note-2">♫</span>
+    <span class="note note-3">♩</span>
+
+    <svg class="cassette-svg" width="280" height="180" viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sombra -->
+  <rect x="10" y="14" width="264" height="158" rx="14" fill="#0E0A30" opacity="0.28"/>
+
+  <!-- Cuerpo teal -->
+  <rect x="4" y="6"  width="272" height="160" rx="13" fill="#2AACBF"/>
+  <rect x="4" y="6"  width="272" height="160" rx="13" stroke="#1A8A9E" stroke-width="2.5"/>
+
+  <!-- Brillo superior -->
+  <rect x="12" y="9" width="256" height="5" rx="2.5" fill="rgba(255,255,255,0.30)"/>
+
+  <!-- Área etiqueta — marfil -->
+  <rect x="20" y="16" width="240" height="74" rx="8" fill="#F5EDD0"/>
+  <rect x="20" y="16" width="240" height="74" rx="8" stroke="#E89050" stroke-width="1.5"/>
+
+  <!-- Líneas naranja decorativas -->
+  <line x1="20" y1="30"  x2="260" y2="30"  stroke="#F08A28" stroke-width="2" opacity="0.55"/>
+  <line x1="20" y1="84"  x2="260" y2="84"  stroke="#F08A28" stroke-width="2" opacity="0.55"/>
+
+  <!-- Texto GRANDE -->
+  <text x="140" y="56" text-anchor="middle"
+        font-family="Cormorant Garamond, Georgia, serif"
+        font-style="italic" font-size="24" fill="#1A1240" font-weight="600">
+    Vivi y Oliver
+  </text>
+  <text x="140" y="74" text-anchor="middle"
+        font-family="Jost, Arial, sans-serif"
+        font-size="10" fill="#0D5E6E" letter-spacing="4" font-weight="500">
+    13 · 02 · 2027
+  </text>
+
+  <!-- Ventana de cinta — dark con franja roja bold -->
+  <rect x="36" y="100" width="208" height="54" rx="27" fill="#1A1240"/>
+  <rect x="36" y="100" width="208" height="54" rx="27" stroke="#F0C030" stroke-width="2"/>
+  <!-- Franja roja dentro de la ventana -->
+  <clipPath id="tcl"><rect x="36" y="100" width="208" height="54" rx="27"/></clipPath>
+  <rect x="36" y="114" width="208" height="16" fill="#E04060" clip-path="url(#tcl)"/>
+  <rect x="36" y="130" width="208" height="5"  fill="rgba(255,255,255,0.55)" clip-path="url(#tcl)"/>
+
+  <!-- Arco de cinta -->
+  <path d="M90 128 Q140 116 190 128" stroke="rgba(245,237,208,0.5)" stroke-width="2.5" fill="none"/>
+
+  <!-- Bobina izquierda — grande, crema con aro magenta -->
+  <circle cx="90"  cy="127" r="22" fill="#F5EDD0"/>
+  <circle cx="90"  cy="127" r="22" stroke="#E04060" stroke-width="2.5"/>
+  <circle class="reel"     cx="90"  cy="127" r="15" fill="none" stroke="#E04060" stroke-width="4" stroke-dasharray="5 4"/>
+  <circle cx="90"  cy="127" r="7"  fill="#2AACBF"/>
+  <circle cx="90"  cy="127" r="3"  fill="#F5EDD0"/>
+
+  <!-- Bobina derecha -->
+  <circle cx="190" cy="127" r="22" fill="#F5EDD0"/>
+  <circle cx="190" cy="127" r="22" stroke="#E04060" stroke-width="2.5"/>
+  <circle class="reel reel-rev" cx="190" cy="127" r="15" fill="none" stroke="#E04060" stroke-width="4" stroke-dasharray="5 4"/>
+  <circle cx="190" cy="127" r="7"  fill="#2AACBF"/>
+  <circle cx="190" cy="127" r="3"  fill="#F5EDD0"/>
+
+  <!-- Tornillos esquina — amarillo -->
+  <circle cx="28"  cy="24"  r="6" fill="#F0C030"/>
+  <circle cx="252" cy="24"  r="6" fill="#F0C030"/>
+  <circle cx="28"  cy="160" r="6" fill="#F0C030"/>
+  <circle cx="252" cy="160" r="6" fill="#F0C030"/>
+
+  <!-- Agujeros inferiores — negro prominente -->
+  <circle cx="60"  cy="158" r="8" fill="#1A1240"/>
+  <circle cx="220" cy="158" r="8" fill="#1A1240"/>
+  <rect x="122" y="151" width="36" height="14" rx="7" fill="#1A1240"/>
+
+  <!-- Muescas laterales -->
+  <rect x="4"   y="72" width="11" height="36" rx="5" fill="#1A8A9E"/>
+  <rect x="265" y="72" width="11" height="36" rx="5" fill="#1A8A9E"/>
+</svg>
+  </div>
+
+  <h1 class="hero-names">Vivi y Oliver</h1>
+  <div class="hero-line"></div>
+  <p class="hero-date">Sábado · 13 de Febrero · 2027</p>
+  <p class="hero-tagline">¡Queremos que estés con nosotros!</p>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>ver todo</span>
+    <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
+      <path d="M1 1L7 7.5L13 1" stroke="#9A7265" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PHOTO                                         -->
+<!-- ════════════════════════════════════════════ -->
+<section class="photo-section">
+  <div class="photo-frame">
+    <img src="assets/vivi-y-oliver.jpg" alt="Vivi y Oliver" loading="eager"/>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- COUNTDOWN                                     -->
+<!-- ════════════════════════════════════════════ -->
+<section class="countdown" aria-label="Cuenta regresiva">
+  <p class="countdown-label">El gran día se acerca</p>
+  <div class="countdown-grid">
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-days">—</span>
+      <span class="cd-name">días</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-hours">—</span>
+      <span class="cd-name">horas</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-min">—</span>
+      <span class="cd-name">min</span>
+    </div>
+    <div class="cd-unit">
+      <span class="cd-num" id="cd-sec">—</span>
+      <span class="cd-name">seg</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- DETAILS                                       -->
+<!-- ════════════════════════════════════════════ -->
+<section class="section">
+  <p class="eyebrow">Los detalles</p>
+  <h2 class="section-title">¿Cuándo y dónde?</h2>
+
+  <div class="detail-list">
+    <div class="detail-card">
+      <div class="d-icon">📅</div>
+      <div>
+        <div class="d-label">Fecha</div>
+        <div class="d-value">Sábado 13 de febrero de 2027</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="d-icon">🕕</div>
+      <div>
+        <div class="d-label">Hora</div>
+        <div class="d-value">18:00 horas (puntual)</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="d-icon">📍</div>
+      <div>
+        <div class="d-label">Lugar</div>
+        <div class="d-value">Dublé Almeyda 2191, Ñuñoa. Club Suizo</div>
+        <a class="map-link"
+           href="https://maps.google.com/?q=Duble+Almeyda+2191+Ñuñoa+Santiago"
+           target="_blank" rel="noopener">
+          Ver en Google Maps →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- ITINERARY                                     -->
+<!-- ════════════════════════════════════════════ -->
+<section class="section section-dark">
+  <p class="eyebrow">El programa</p>
+  <h2 class="section-title">Itinerario de la noche</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">18:00</div>
+      <div class="tl-event">Ceremonia</div>
+      <div class="tl-desc">El momento más especial — los esperamos puntuales 🌸</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">Luego</div>
+      <div class="tl-event">Cóctel en recepción</div>
+      <div class="tl-desc">Bienvenida con bebidas y aperitivos</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">Salón</div>
+      <div class="tl-event">Cóctel a la mesa</div>
+      <div class="tl-desc">Nos acomodamos, brindamos y celebramos juntos</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">Después</div>
+      <div class="tl-event">¡A bailar!</div>
+      <div class="tl-desc">La pista está lista, la música también 🎶</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">Toda la noche</div>
+      <div class="tl-event">Fiesta hasta las 02:00 AM</div>
+      <div class="tl-desc">¡A celebrar hasta que el cuerpo aguante! ✨</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- DRESSCODE                                     -->
+<!-- ════════════════════════════════════════════ -->
+<section class="dresscode-section">
+  <p class="eyebrow">Código de vestimenta</p>
+  <h2 class="section-title">¿Qué me pongo?</h2>
+  <p class="dresscode-body">
+    Queremos que te sientas a gusto y que vengas como mejor te sientas, pero si nos solicitas alguna referencia, nuestra recomendación es que asistas <strong>semiformal</strong>: pantalón o vestido largo/corto; chaqueta y pantalón de tela sin corbata.
+  </p>
+  <div class="chips">
+    <span class="chip">👗 Vestido largo o corto</span>
+    <span class="chip">🕴 Chaqueta sin corbata</span>
+    <span class="chip">✨ Como tú quieras</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- RSVP                                          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="rsvp-section">
+  <p class="eyebrow">Confirmación de asistencia</p>
+  <h2 class="section-title">¿Vas a venir?</h2>
+  <p class="rsvp-note">
+    ¡Necesitamos saber si estarás!<br>
+    Por favor confirma antes del<br>
+    <strong>30 de noviembre de 2026</strong><br>
+    o lo antes posible 🌺
+  </p>
+  <a href="https://forms.google.com/REEMPLAZAR_CON_TU_ENLACE"
+     target="_blank" rel="noopener"
+     class="btn btn-primary">
+    Confirmar asistencia
+  </a>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- GIFTS                                         -->
+<!-- ════════════════════════════════════════════ -->
+<section class="gifts-section">
+  <p class="eyebrow">Regalos</p>
+  <h2 class="section-title">¿Y los regalos?</h2>
+  <p class="gifts-text">
+    Nuestro mejor regalo<br>es tu presencia ♡<br>
+    <br>
+    Pero si insistes… acá te<br>dejamos una pequeña sugerencia.
+  </p>
+  <a href="REEMPLAZAR_CON_TU_ENLACE_BANCARIO"
+     target="_blank" rel="noopener"
+     class="btn btn-outline">
+    Ver sugerencia 🥂
+  </a>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- FOOTER                                        -->
+<!-- ════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-names">Vivi y Oliver</div>
+  <div class="footer-sub">13 · 02 · 2027 · Ñuñoa, Santiago</div>
+  <div class="footer-hearts">♡ ♡ ♡</div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
