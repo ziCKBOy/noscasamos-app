@@ -178,17 +178,22 @@
       <span class="cd-num" id="cd-days">—</span>
       <span class="cd-name">días</span>
     </div>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-hours">—</span>
-      <span class="cd-name">horas</span>
-    </div>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-min">—</span>
-      <span class="cd-name">min</span>
-    </div>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-sec">—</span>
-      <span class="cd-name">seg</span>
+    <!-- Horas, minutos y segundos como reloj digital (05:19:57) -->
+    <div class="cd-reloj">
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-hours">—</span>
+        <span class="cd-name">horas</span>
+      </div>
+      <span class="cd-num cd-sep" aria-hidden="true">:</span>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-min">—</span>
+        <span class="cd-name">min</span>
+      </div>
+      <span class="cd-num cd-sep" aria-hidden="true">:</span>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-sec">—</span>
+        <span class="cd-name">seg</span>
+      </div>
     </div>
   </div>
 </section>
@@ -328,7 +333,7 @@
     <br>
     Pero si insistes… acá te<br>dejamos una pequeña sugerencia.
   </p>
-  <button type="button" class="btn btn-outline" id="gift-open" aria-haspopup="dialog">
+  <button type="button" class="btn btn-fucsia" id="gift-open" aria-haspopup="dialog">
     Ver sugerencia 🥂
   </button>
 </section>

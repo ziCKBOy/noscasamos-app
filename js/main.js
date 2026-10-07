@@ -9,6 +9,7 @@ function tick() {
     ['cd-days','cd-hours','cd-min','cd-sec'].forEach(id =>
       (document.getElementById(id).textContent = '🎉')
     );
+    document.querySelectorAll('.cd-sep').forEach(sep => (sep.hidden = true));
     return;
   }
   const d = Math.floor(diff / 86400000);

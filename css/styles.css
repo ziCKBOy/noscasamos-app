@@ -28,6 +28,8 @@ body {
   font-weight: 300;
   line-height: 1.65;
   overflow-x: hidden;
+  /* Cormorant usa números antiguos por defecto (el 1 parece una "I"): usar los modernos */
+  font-variant-numeric: lining-nums;
 }
 
 /* ── HERO ──────────────────────────────────── */
@@ -270,13 +272,21 @@ body {
 
 .cd-unit { text-align: center; }
 
+/* Reloj digital: horas:minutos:segundos con el mismo estilo de los números */
+.cd-reloj {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.cd-sep { opacity: 0.7; }
+
 .cd-num {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 500;
   font-size: 3.2rem;
   color: var(--citric);
   line-height: 1;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
   display: block;
 }
 
@@ -534,6 +544,20 @@ body {
 .btn-outline:hover, .btn-outline:active {
   background: #1A1240;
   color: #fff;
+}
+
+/* Coral de las bobinas del casete, en su tono profundo (blanco encima: 5,3:1) */
+.btn-fucsia {
+  background: var(--rose-btn);
+  color: #fff;
+  border: 0;
+  font-weight: 500;
+  box-shadow: 0 4px 18px rgba(200,48,80,0.30);
+}
+.btn-fucsia:hover, .btn-fucsia:active {
+  background: var(--dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(26,18,64,0.28);
 }
 
 button.btn { cursor: pointer; }
