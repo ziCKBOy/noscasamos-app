@@ -72,10 +72,26 @@ function obtenerElegidos() {
   return consultaElegidos;
 }
 
+/* Regalos avisados desde este teléfono en esta visita: se marcan al tiro,
+ * aunque la hoja de Google tarde hasta un minuto en reflejarlos. */
+function regaladosLocal() {
+  try { return JSON.parse(sessionStorage.getItem('regalados') || '[]'); } catch { return []; }
+}
+function marcarRegaladoLocal(nombre) {
+  try {
+    sessionStorage.setItem('regalados', JSON.stringify([...regaladosLocal(), nombre]));
+  } catch { /* sin almacenamiento: se verá al recargar */ }
+  // Redibuja las listas visibles para que el regalo aparezca como ya regalado
+  for (const grid of document.querySelectorAll('.lista-grid')) {
+    if (grid.children.length && grid.dataset.invitado !== undefined) renderLista(grid, grid.dataset.invitado);
+  }
+}
+
 /* Dibuja las tarjetas en `grid` (un <ul class="lista-grid">). Mientras llega
  * el estado muestra una barra de progreso, y luego dibuja todo de una vez, ya
  * marcado, para que los regalos elegidos no cambien frente al invitado. */
 async function renderLista(grid, invitado) {
+  grid.dataset.invitado = invitado || '';
   const turno = String(Date.now() + Math.random());
   grid.dataset.turno = turno;
 
@@ -95,7 +111,7 @@ async function renderLista(grid, invitado) {
   if (grid.dataset.turno !== turno) return; // se volvió a abrir mientras cargaba
 
   const conteo = new Map();
-  for (const nombre of elegidos || []) {
+  for (const nombre of [...(elegidos || []), ...regaladosLocal()]) {
     const n = normalizar(nombre);
     conteo.set(n, (conteo.get(n) || 0) + 1);
   }
@@ -162,7 +178,13 @@ function crearTarjeta(r, invitado, yaRegalado, grid) {
     btn.target = '_blank';
     btn.rel = 'noopener';
     btn.textContent = 'Lo regalo yo ♡';
-    btn.setAttribute('aria-label', 'Lo regalo yo: ' + r.nombre + ' (se abre en otra pestaña)');
+    btn.setAttribute('aria-label', 'Lo regalo yo: ' + r.nombre);
+    // Abre el aviso dentro de la página; el link a Google queda como respaldo
+    btn.addEventListener('click', e => {
+      if (typeof abrirAviso !== 'function') return;
+      e.preventDefault();
+      abrirAviso(r.nombre);
+    });
   }
   li.append(btn);
 

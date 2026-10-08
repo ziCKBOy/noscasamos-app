@@ -19,6 +19,9 @@
   --light-peach: #FFF3C8;        /* amarillo muy claro */
 }
 
+/* Lo marcado como oculto se oculta siempre, aunque otra regla le dé display */
+[hidden] { display: none !important; }
+
 /* Texto solo para lectores de pantalla */
 .sr-only {
   position: absolute !important;
@@ -1223,6 +1226,120 @@ html { scroll-behavior: smooth; }
 
 /* En celular la barra va abajo: espacio para que no tape el pie de página */
 .menu ~ footer { padding-bottom: calc(3rem + 64px + env(safe-area-inset-bottom, 0px)); }
+
+/* ── FORMULARIOS PROPIOS (js/formularios.js) ── */
+.form-modal { width: min(480px, calc(100% - 2rem)); }
+.form-modal form { text-align: left; }
+.form-modal form > .eyebrow,
+.form-modal form > .gift-title,
+.form-modal form > .gift-intro { text-align: center; }
+
+.campo {
+  display: block;
+  margin: 0 0 1.15rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.campo-etiqueta {
+  display: block;
+  margin-bottom: 0.4rem;
+  padding: 0;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-texto);
+}
+.campo-etiqueta small {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--muted);
+}
+.campo input:not([type="radio"]),
+.campo textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid rgba(13,94,110,0.35);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--dark);
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;                       /* 16 px: iPhone no hace zoom */
+  font-weight: 400;
+  resize: vertical;
+  transition: border-color .2s, box-shadow .2s;
+}
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--teal-texto);
+  box-shadow: 0 0 0 3px rgba(42,172,191,0.25);
+}
+.campo ::placeholder { color: rgba(26,96,112,0.55); }
+
+/* Opciones como píldoras (como las etiquetas del sitio) */
+.opciones { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.opciones legend { width: 100%; float: left; }
+.opcion { position: relative; cursor: pointer; }
+.opcion input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+}
+.opcion > span {
+  display: inline-block;
+  padding: 0.55rem 1.05rem;
+  border: 1.5px solid rgba(13,94,110,0.35);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 0.95rem;
+  color: var(--dark);
+  transition: background .2s, color .2s, border-color .2s;
+}
+.opcion:hover > span { border-color: var(--teal-texto); }
+.opcion input:checked + span {
+  background: var(--teal-texto);
+  border-color: var(--teal-texto);
+  color: #fff;
+}
+.opcion input:focus-visible + span { outline: 2px solid var(--rose-btn); outline-offset: 2px; }
+.opciones-num .opcion > span { min-width: 3rem; text-align: center; }
+
+/* Errores */
+.campo-error {
+  display: none;
+  width: 100%;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--rose-btn);
+}
+.campo.con-error .campo-error { display: block; }
+.campo.con-error input:not([type="radio"]),
+.campo.con-error textarea,
+.campo.con-error .opcion > span { border-color: var(--rose-btn); }
+
+.form-enviar { display: block; width: 100%; margin-top: 0.4rem; padding-left: 1rem; padding-right: 1rem; letter-spacing: 0.14em; }
+.form-enviar:disabled { opacity: 0.7; cursor: progress; transform: none; }
+.form-error {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--rose-btn);
+  text-align: center;
+}
+.form-error a { color: inherit; }
+
+/* Pantalla de ¡Gracias! */
+.form-gracias { padding: 1rem 0 0.5rem; }
+.form-gracias-icono {
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--rose);
+  margin-bottom: 0.6rem;
+}
+.form-gracias .gift-title:focus { outline: none; }
 
 /* ── APARICIÓN AL BAJAR (js/reveal.js) ────── */
 .reveal {
