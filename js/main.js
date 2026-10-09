@@ -198,8 +198,19 @@ let invitadoActual = '';
 const giftModal = document.getElementById('gift-modal');
 const giftCopy  = document.getElementById('gift-copy');
 
+// La ventana tiene dos pasos: tarjetas de opciones y el detalle de transferencia
+function mostrarVistaRegalo(nombre, enfocar) {
+  giftModal.querySelectorAll('.regalo-vista').forEach(v => { v.hidden = v.dataset.vista !== nombre; });
+  const titulo = giftModal.querySelector('.regalo-vista:not([hidden]) .gift-title');
+  giftModal.setAttribute('aria-labelledby', titulo.id);
+  if (enfocar) titulo.focus();
+}
+giftModal.querySelectorAll('[data-ir]').forEach(b =>
+  b.addEventListener('click', () => mostrarVistaRegalo(b.dataset.ir, true)));
+
 document.getElementById('gift-open').addEventListener('click', () => {
   obtenerElegidos(); // adelanta la consulta para que la lista abra ya marcada
+  mostrarVistaRegalo('inicio');
   giftModal.showModal();
 });
 document.getElementById('gift-close').addEventListener('click', () => giftModal.close());
@@ -266,6 +277,7 @@ document.getElementById('gift-list-link').addEventListener('click', e => {
 document.getElementById('lista-close').addEventListener('click', () => listaModal.close());
 document.getElementById('lista-volver').addEventListener('click', () => {
   listaModal.close();
+  mostrarVistaRegalo('inicio');
   giftModal.showModal();
 });
 cerrarAlTocarFuera(listaModal);

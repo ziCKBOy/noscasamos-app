@@ -412,18 +412,37 @@
 <!-- ════════════════════════════════════════════ -->
 <!-- GIFTS MODAL                                   -->
 <!-- ════════════════════════════════════════════ -->
-<dialog class="gift-modal" id="gift-modal" aria-labelledby="gift-modal-title">
+<dialog class="gift-modal regalo-modal" id="gift-modal" aria-labelledby="gift-modal-title">
   <button type="button" class="gift-close" id="gift-close" aria-label="Cerrar">×</button>
 
-  <p class="eyebrow">Una pequeña sugerencia</p>
+  <!-- Paso 1: elegir cómo regalar -->
+  <div class="regalo-vista" data-vista="inicio">
+    <p class="eyebrow">Lado B · Regalos</p>
+    <h2 class="gift-title" id="gift-modal-title" tabindex="-1">¿Cómo quieres regalarnos?</h2>
+    <div class="regalo-opciones">
+      <button type="button" class="regalo-opcion" data-ir="transferencia">
+        <span class="regalo-opcion-icono" aria-hidden="true">💌</span>
+        <span class="regalo-opcion-titulo">Transferencia</span>
+        <span class="regalo-opcion-texto">Nuestros datos bancarios</span>
+      </button>
+      <a class="regalo-opcion" href="lista.html" id="gift-list-link">
+        <span class="regalo-opcion-icono" aria-hidden="true">🎁</span>
+        <span class="regalo-opcion-titulo">Lista de novios</span>
+        <span class="regalo-opcion-texto">Elige un regalo de nuestra lista</span>
+      </a>
+      <a class="regalo-opcion" href="https://docs.google.com/forms/d/e/1FAIpQLSec_GYirpFokBr4Axic97u8SnxmepcCcS62v51o5aP7ZCtQkQ/viewform" target="_blank" rel="noopener" id="gift-notify-link">
+        <span class="regalo-opcion-icono" aria-hidden="true">♡</span>
+        <span class="regalo-opcion-titulo">Avisar mi regalo</span>
+        <span class="regalo-opcion-texto">Cuéntanos qué nos regalaste</span>
+      </a>
+    </div>
+  </div>
 
-  <!-- En PC: dos columnas (transferencia | lista y aviso); en celular, apiladas -->
-  <div class="gift-cols">
-  <div class="gift-col">
-  <h2 class="gift-title" id="gift-modal-title">Transferencia <span aria-hidden="true">💌</span></h2>
-  <p class="gift-intro">
-    Si quieres hacernos un regalo,<br>puedes transferirnos aquí:
-  </p>
+  <!-- Paso 2: datos de transferencia -->
+  <div class="regalo-vista" data-vista="transferencia" hidden>
+    <button type="button" class="lista-back regalo-volver" data-ir="inicio"><span aria-hidden="true">←</span> Volver</button>
+    <h2 class="gift-title" id="gift-transfer-title" tabindex="-1">Transferencia <span aria-hidden="true">💌</span></h2>
+    <p class="gift-intro">Si quieres hacernos un regalo,<br>puedes transferirnos aquí:</p>
 
   <dl class="bank-data" id="bank-data">
     <div><dt>Nombre</dt><dd>Oliver Becerra A.</dd></div>
@@ -434,28 +453,10 @@
     <div><dt>Correo</dt><dd>oliver.becerra@gmail.com</dd></div>
   </dl>
 
-  <button type="button" class="btn btn-primary gift-copy" id="gift-copy">Copiar datos</button>
-  </div>
-
-  <div class="gift-divider gift-divider-cols"><span>o si prefieres</span></div>
-
-  <div class="gift-col">
-  <h3 class="gift-subtitle">Lista de novios <span aria-hidden="true">🎁</span></h3>
-  <p class="gift-intro">Elige algo de nuestra lista de regalos.</p>
-  <a href="lista.html" class="btn btn-outline" id="gift-list-link">
-    Ver lista de novios
-  </a>
-
-  <div class="gift-divider" aria-hidden="true"><span>♡</span></div>
-
-  <p class="gift-intro">
-    ¿Ya nos hiciste un regalo?<br>Cuéntanos para poder agradecerte.
-  </p>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSec_GYirpFokBr4Axic97u8SnxmepcCcS62v51o5aP7ZCtQkQ/viewform" target="_blank" rel="noopener"
-     class="gift-notify" id="gift-notify-link">
-    Avisar mi regalo <span aria-hidden="true">→</span>
-  </a>
-  </div>
+    <button type="button" class="btn btn-primary gift-copy" id="gift-copy">Copiar datos</button>
+    <p class="regalo-pie">
+      <button type="button" class="gift-notify" id="gift-transfer-aviso">¿Ya transferiste? Avísanos <span aria-hidden="true">→</span></button>
+    </p>
   </div>
 </dialog>
 

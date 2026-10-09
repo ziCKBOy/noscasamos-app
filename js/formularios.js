@@ -133,14 +133,6 @@ const ventanaRsvp = document.getElementById('rsvp-link') && crearVentana('rsvp-m
     </fieldset>
 
     <div class="solo-si" hidden>
-      <fieldset class="campo opciones opciones-num" data-requerido>
-        <legend class="campo-etiqueta">¿Cuántas personas confirmas, incluyéndote?</legend>
-        <label class="opcion"><input type="radio" name="personas" value="1"><span>1</span></label>
-        <label class="opcion"><input type="radio" name="personas" value="2"><span>2</span></label>
-        <label class="opcion"><input type="radio" name="personas" value="3"><span>3</span></label>
-        <label class="opcion"><input type="radio" name="personas" value="4"><span>4</span></label>
-        <span class="campo-error">Elige cuántas personas vienen.</span>
-      </fieldset>
       <label class="campo">
         <span class="campo-etiqueta">¿Alguna restricción alimentaria o alergia? <small>(opcional)</small></span>
         <textarea name="restricciones" rows="2" placeholder="Vegetariano, celíaco, alergias…"></textarea>
@@ -190,7 +182,9 @@ if (ventanaRsvp) {
       pageHistory: viene ? '0,1,2' : '0,2',
     };
     if (viene) {
-      campos[RSVP.personas] = f.personas.value;
+      // La invitación es individual: la pregunta no se muestra, pero en Google
+      // es obligatoria, así que se envía siempre 1 (si no, Google descarta la respuesta)
+      campos[RSVP.personas] = '1';
       campos[RSVP.restricciones] = f.restricciones.value.trim();
       campos[RSVP.cancion] = f.cancion.value.trim();
     }
@@ -264,13 +258,16 @@ const ventanaAviso = crearVentana('aviso-modal', `
   };
   form.addEventListener('change', () => { ajustarCampos(); marcarErrores(form, false); });
 
-  // Abre el aviso; con `regalo`, llega marcado como regalo de la lista
-  window.abrirAviso = function (regalo) {
+  // Abre el aviso; con `regalo` llega marcado como regalo de la lista, y con
+  // tipo 'transferencia', como transferencia
+  window.abrirAviso = function (regalo, tipo) {
     reiniciar(ventanaAviso);
     form.elements.nombre.value = nombreInvitado;
     if (regalo) {
       form.elements.tipo.value = 'lista';
       form.elements.cual.value = regalo;
+    } else if (tipo === 'transferencia') {
+      form.elements.tipo.value = 'transferencia';
     }
     ajustarCampos();
     ventanaAviso.showModal();
@@ -309,13 +306,17 @@ const ventanaAviso = crearVentana('aviso-modal', `
   });
 }
 
-// "Avisar mi regalo →" de la ventana de regalos (solo en la invitación)
+// Tarjeta "Avisar mi regalo" y "¿Ya transferiste?" (solo en la invitación)
 const linkAviso = document.getElementById('gift-notify-link');
 if (linkAviso) {
   linkAviso.addEventListener('click', e => {
     e.preventDefault();
     document.getElementById('gift-modal').close();
     abrirAviso();
+  });
+  document.getElementById('gift-transfer-aviso').addEventListener('click', () => {
+    document.getElementById('gift-modal').close();
+    abrirAviso(null, 'transferencia');
   });
 }
 
