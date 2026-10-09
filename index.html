@@ -418,7 +418,10 @@
 <!-- GIFTS MODAL                                   -->
 <!-- ════════════════════════════════════════════ -->
 <dialog class="gift-modal regalo-modal" id="gift-modal" aria-labelledby="gift-modal-title">
-  <button type="button" class="gift-close" id="gift-close" aria-label="Cerrar">×</button>
+  <div class="modal-barra">
+    <button type="button" class="lista-back modal-volver" id="gift-volver" data-ir="inicio" hidden><span aria-hidden="true">←</span> Volver</button>
+    <button type="button" class="gift-close" id="gift-close" aria-label="Cerrar">×</button>
+  </div>
 
   <!-- Paso 1: elegir cómo regalar -->
   <div class="regalo-vista" data-vista="inicio">
@@ -445,7 +448,6 @@
 
   <!-- Paso 2: datos de transferencia -->
   <div class="regalo-vista" data-vista="transferencia" hidden>
-    <button type="button" class="lista-back regalo-volver" data-ir="inicio"><span aria-hidden="true">←</span> Volver</button>
     <h2 class="gift-title" id="gift-transfer-title" tabindex="-1">Transferencia <span aria-hidden="true">💌</span></h2>
     <p class="gift-intro">Si quieres hacernos un regalo,<br>puedes transferirnos aquí:</p>
 
@@ -467,8 +469,10 @@
 
 <!-- Lista de regalos dentro de la invitación: sin cambiar de página, la música sigue -->
 <dialog class="gift-modal lista-modal" id="lista-modal" aria-labelledby="lista-modal-title">
-  <button type="button" class="gift-close" id="lista-close" aria-label="Cerrar">×</button>
-  <button type="button" class="lista-back" id="lista-volver"><span aria-hidden="true">←</span> Volver a regalos</button>
+  <div class="modal-barra">
+    <button type="button" class="lista-back modal-volver" id="lista-volver"><span aria-hidden="true">←</span> Volver a regalos</button>
+    <button type="button" class="gift-close" id="lista-close" aria-label="Cerrar">×</button>
+  </div>
 
   <p class="eyebrow">Vivi y Oliver · 13 · 02 · 2027</p>
   <h2 class="gift-title" id="lista-modal-title">Lista de regalos <span aria-hidden="true">🎁</span></h2>

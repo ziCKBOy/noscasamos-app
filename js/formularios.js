@@ -113,7 +113,9 @@ const GRACIAS = `
 
 /* ── Confirmación de asistencia ── */
 const ventanaRsvp = document.getElementById('rsvp-link') && crearVentana('rsvp-modal', `
-  <button type="button" class="gift-close" data-cerrar aria-label="Cerrar">×</button>
+  <div class="modal-barra">
+    <button type="button" class="gift-close" data-cerrar aria-label="Cerrar">×</button>
+  </div>
   <form novalidate>
     <p class="eyebrow">Pista 4 · Confirmación</p>
     <h2 class="gift-title" id="rsvp-modal-titulo">¿Vas a venir?</h2>
@@ -205,8 +207,10 @@ if (ventanaRsvp) {
 
 /* ── Aviso de regalo ── */
 const ventanaAviso = crearVentana('aviso-modal', `
-  <button type="button" class="gift-close" data-cerrar aria-label="Cerrar">×</button>
-  <button type="button" class="lista-back regalo-volver" data-volver><span aria-hidden="true">←</span> Volver</button>
+  <div class="modal-barra">
+    <button type="button" class="lista-back modal-volver" data-volver><span aria-hidden="true">←</span> Volver</button>
+    <button type="button" class="gift-close" data-cerrar aria-label="Cerrar">×</button>
+  </div>
   <form novalidate class="con-volver">
     <p class="eyebrow">Lado B · Regalos</p>
     <h2 class="gift-title" id="aviso-modal-titulo">Avisar mi regalo</h2>

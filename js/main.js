@@ -201,6 +201,7 @@ const giftCopy  = document.getElementById('gift-copy');
 // La ventana tiene dos pasos: tarjetas de opciones y el detalle de transferencia
 function mostrarVistaRegalo(nombre, enfocar) {
   giftModal.querySelectorAll('.regalo-vista').forEach(v => { v.hidden = v.dataset.vista !== nombre; });
+  document.getElementById('gift-volver').hidden = nombre === 'inicio';
   const titulo = giftModal.querySelector('.regalo-vista:not([hidden]) .gift-title');
   giftModal.setAttribute('aria-labelledby', titulo.id);
   if (enfocar) titulo.focus();

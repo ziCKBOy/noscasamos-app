@@ -858,10 +858,12 @@ button.btn { cursor: pointer; }
 
 /* ── GIFTS MODAL ───────────────────────────── */
 .gift-modal {
+  --pad-top: 2.6rem;
+  --pad-x: 1.6rem;
   width: min(440px, calc(100% - 2rem));
   max-height: calc(100svh - 2rem);
   margin: auto;
-  padding: 2.6rem 1.6rem 2.2rem;
+  padding: var(--pad-top) var(--pad-x) 2.2rem;
   border: 0;
   border-radius: 20px;
   background: var(--cream);
@@ -879,12 +881,25 @@ button.btn { cursor: pointer; }
   from { opacity: 0; transform: translateY(16px) scale(.97); }
 }
 
+/* Barra fija arriba de cada ventana: "Volver" y "×" siguen a la vista al bajar.
+   Ocupa justo el margen superior de la ventana (no empuja el contenido) y deja
+   pasar los toques salvo en los botones. */
+.modal-barra {
+  position: sticky;
+  top: calc(-1 * var(--pad-top));       /* el navegador cuenta desde dentro del margen */
+  z-index: 5;
+  height: var(--pad-top);
+  margin: calc(-1 * var(--pad-top)) calc(-1 * var(--pad-x)) 0;
+  pointer-events: none;
+}
+.modal-barra > * { pointer-events: auto; }
 .gift-close {
   position: absolute;
   top: 0.7rem; right: 0.9rem;
   width: 2.2rem; height: 2.2rem;
   border: 0; border-radius: 50%;
-  background: transparent;
+  background: rgba(245,237,208,0.95);
+  box-shadow: 0 2px 8px rgba(26,18,64,0.12);
   color: var(--muted);
   font-size: 1.7rem; line-height: 1;
   cursor: pointer;
@@ -1150,9 +1165,9 @@ footer {
 /* Lista dentro de la invitación (ventana) */
 .lista-modal { width: min(880px, calc(100% - 2rem)); }
 .lista-modal .lista-help { margin-bottom: 1.6rem; }
-.lista-modal .lista-back {
+.modal-volver {
   position: absolute;
-  top: 0.9rem; left: 1rem;
+  top: 0.75rem; left: 1rem;
   margin: 0;
 }
 .lista-modal .eyebrow { margin-top: 2.4rem; }
@@ -1310,11 +1325,6 @@ html { scroll-behavior: smooth; }
 }
 .regalo-opcion-texto { font-size: 0.88rem; color: var(--muted); }
 
-.regalo-volver {
-  position: absolute;
-  top: 0.9rem; left: 1rem;
-  margin: 0;
-}
 .regalo-vista[data-vista="transferencia"] { padding-top: 1.8rem; }
 .regalo-pie { margin-top: 1.3rem; }
 button.gift-notify { background: none; border: 0; font: inherit; font-size: 0.85rem; cursor: pointer; }
