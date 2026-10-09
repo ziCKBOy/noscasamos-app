@@ -1026,15 +1026,28 @@ footer {
 .lista-header .section-title { margin-bottom: 1.2rem; }
 .lista-header .gifts-text { margin-bottom: 1.2rem; }
 
+/* Botones "Volver": píldora con borde, bien visibles */
 .lista-back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   margin-bottom: 2.2rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--teal-texto);
+  border-radius: 999px;
+  background: var(--card);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--teal-texto);
   text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(26,18,64,0.08);
+  transition: background .2s, color .2s;
 }
-.lista-back:hover { color: var(--burgundy); }
+.lista-back:hover,
+.lista-back:focus-visible { background: var(--teal-texto); color: #fff; outline: none; }
 
 .lista-help {
   font-size: 0.95rem;
@@ -1120,16 +1133,10 @@ footer {
 .lista-modal .lista-help { margin-bottom: 1.6rem; }
 .lista-modal .lista-back {
   position: absolute;
-  top: 1rem; left: 1.1rem;
+  top: 0.9rem; left: 1rem;
   margin: 0;
-  padding: 0.3rem 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
 }
-.lista-modal .eyebrow { margin-top: 1.2rem; }
+.lista-modal .eyebrow { margin-top: 2.4rem; }
 
 /* ── MENÚ DE SECCIONES (js/menu.js) ───────── */
 html { scroll-behavior: smooth; }
@@ -1286,22 +1293,17 @@ html { scroll-behavior: smooth; }
 
 .regalo-volver {
   position: absolute;
-  top: 0.95rem; left: 1.1rem;
+  top: 0.9rem; left: 1rem;
   margin: 0;
-  padding: 0.3rem 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
 }
-.regalo-vista[data-vista="transferencia"] { padding-top: 0.6rem; }
+.regalo-vista[data-vista="transferencia"] { padding-top: 1.8rem; }
 .regalo-pie { margin-top: 1.3rem; }
 button.gift-notify { background: none; border: 0; font: inherit; font-size: 0.85rem; cursor: pointer; }
 
 /* ── FORMULARIOS PROPIOS (js/formularios.js) ── */
 .form-modal { width: min(480px, calc(100% - 2rem)); }
 .form-modal form { text-align: left; }
+.form-modal form.con-volver { padding-top: 1.8rem; }
 .form-modal form > .eyebrow,
 .form-modal form > .gift-title,
 .form-modal form > .gift-intro { text-align: center; }

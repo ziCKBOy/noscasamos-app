@@ -206,7 +206,8 @@ if (ventanaRsvp) {
 /* ── Aviso de regalo ── */
 const ventanaAviso = crearVentana('aviso-modal', `
   <button type="button" class="gift-close" data-cerrar aria-label="Cerrar">×</button>
-  <form novalidate>
+  <button type="button" class="lista-back regalo-volver" data-volver><span aria-hidden="true">←</span> Volver</button>
+  <form novalidate class="con-volver">
     <p class="eyebrow">Lado B · Regalos</p>
     <h2 class="gift-title" id="aviso-modal-titulo">Avisar mi regalo</h2>
     <p class="gift-intro">Cuéntanos qué nos regalaste para poder agradecerte ♡</p>
@@ -258,9 +259,18 @@ const ventanaAviso = crearVentana('aviso-modal', `
   };
   form.addEventListener('change', () => { ajustarCampos(); marcarErrores(form, false); });
 
+  // "Volver" lleva a donde se abrió el aviso; si no se indica, solo cierra
+  // (por ejemplo, desde la lista, que queda abierta debajo)
+  let volverA = null;
+  ventanaAviso.querySelector('[data-volver]').addEventListener('click', () => {
+    ventanaAviso.close();
+    if (volverA) volverA();
+  });
+
   // Abre el aviso; con `regalo` llega marcado como regalo de la lista, y con
   // tipo 'transferencia', como transferencia
-  window.abrirAviso = function (regalo, tipo) {
+  window.abrirAviso = function (regalo, tipo, volver) {
+    volverA = volver || null;
     reiniciar(ventanaAviso);
     form.elements.nombre.value = nombreInvitado;
     if (regalo) {
@@ -309,14 +319,19 @@ const ventanaAviso = crearVentana('aviso-modal', `
 // Tarjeta "Avisar mi regalo" y "¿Ya transferiste?" (solo en la invitación)
 const linkAviso = document.getElementById('gift-notify-link');
 if (linkAviso) {
+  const regalos = document.getElementById('gift-modal');
+  const volverARegalos = vista => () => {
+    mostrarVistaRegalo(vista);
+    regalos.showModal();
+  };
   linkAviso.addEventListener('click', e => {
     e.preventDefault();
-    document.getElementById('gift-modal').close();
-    abrirAviso();
+    regalos.close();
+    abrirAviso(null, null, volverARegalos('inicio'));
   });
   document.getElementById('gift-transfer-aviso').addEventListener('click', () => {
-    document.getElementById('gift-modal').close();
-    abrirAviso(null, 'transferencia');
+    regalos.close();
+    abrirAviso(null, 'transferencia', volverARegalos('transferencia'));
   });
 }
 
