@@ -53,7 +53,7 @@ function marcarSonando(sonando) {
   wrap.classList.toggle('sonando', sonando);
   document.documentElement.classList.toggle('musica-sonando', sonando);
   wrap.setAttribute('aria-pressed', String(sonando));
-  hint.textContent = sonando ? '♪ sonando · ' + cancion.dataset.titulo : '♪ toca el casete';
+  hint.textContent = sonando ? '♪ sonando\n' + cancion.dataset.titulo : '♪ toca el casete';
   botonMusica.setAttribute('aria-pressed', String(sonando));
 }
 

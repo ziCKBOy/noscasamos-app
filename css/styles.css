@@ -181,6 +181,10 @@ footer::before {
 
 .cassette-hint {
   margin: -1.8rem 0 2rem;
+  /* Dos líneas reservadas ("♪ sonando" + canción): la portada no salta al tocar */
+  white-space: pre-line;
+  min-height: 3.3em;
+  line-height: 1.65;
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   color: var(--muted);

@@ -11,11 +11,22 @@
  * su cantidad. Para liberarlo, borra la fila en la hoja de respuestas.
  */
 const REGALOS = [
-  // EJEMPLOS: reemplazar por la lista real
-  { emoji: '☕', nombre: 'Cafetera',              descripcion: 'De filtro o italiana' },
-  { emoji: '🍳', nombre: 'Juego de sartenes',     descripcion: 'Antiadherentes' },
-  { emoji: '🛏️', nombre: 'Juego de sábanas',      descripcion: '2 plazas' },
-  { emoji: '🍷', nombre: 'Copas de vino',         descripcion: 'Set de 6' },
+  { emoji: '☕', nombre: 'Juego de tazones' },
+  { emoji: '🍽️', nombre: 'Vajilla' },
+  { emoji: '🍲', nombre: 'Ollas recubiertas en cerámica', descripcion: 'Una o un juego' },
+  { emoji: '🥃', nombre: 'Vasos' },
+  { emoji: '🍷', nombre: 'Copas' },
+  { emoji: '🧺', nombre: 'Mantel cuadrado' },
+  { emoji: '🥡', nombre: 'Contenedores para el refrigerador', descripcion: 'De distintos tamaños, para guardar comida' },
+  { emoji: '🪴', nombre: 'Planta de interior' },
+  { emoji: '🛁', nombre: 'Toallas de mano' },
+  { emoji: '🪑', nombre: 'Dos sillas para terraza', descripcion: 'No reclinables' },
+  { emoji: '🥛', nombre: 'Espumador de leche', descripcion: 'Para el café' },
+  { emoji: '🍞', nombre: 'Tostador eléctrico' },
+  { emoji: '🥪', nombre: 'Sandwichera' },
+  { emoji: '🍊', nombre: 'Juguera', descripcion: 'De 1,5 litros o más' },
+  { emoji: '🥫', nombre: 'Abrelatas eléctrico' },
+  { emoji: '🥄', nombre: 'Set de cucharón, espumadero y espátula' },
 ];
 
 /* Formulario "Avisar mi regalo" (links del registro del script de Google) */
