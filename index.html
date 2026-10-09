@@ -166,18 +166,19 @@
   <p class="hero-date">Sábado · 13 de Febrero · 2027</p>
   <p class="hero-tagline">¡Queremos que estés con nosotros!</p>
 
-  <div class="scroll-hint" aria-hidden="true">
+  <!-- "Ver todo": baja a la sección siguiente (las fotos) -->
+  <a class="scroll-hint" href="#fotos" aria-label="Ver todo: bajar a las fotos y los detalles">
     <span>ver todo</span>
-    <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
+    <svg width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true">
       <path d="M1 1L7 7.5L13 1" stroke="#9A7265" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-  </div>
+  </a>
 </section>
 
 <!-- ════════════════════════════════════════════ -->
 <!-- PHOTO                                         -->
 <!-- ════════════════════════════════════════════ -->
-<section class="photo-section" aria-label="Fotos de Vivi y Oliver">
+<section class="photo-section" id="fotos" aria-label="Fotos de Vivi y Oliver">
   <!-- Marco de radio casetera de los 80; la galería va al centro -->
   <div class="radio">
     <div class="radio-antena" aria-hidden="true"></div>
@@ -486,9 +487,8 @@
   <div class="footer-names">Vivi y Oliver</div>
   <div class="footer-sub">13 · 02 · 2027 · Ñuñoa, Santiago</div>
   <div class="footer-hearts" aria-hidden="true">♡ ♡ ♡</div>
-  <a class="footer-cinta" href="#inicio">
-    Fin del Lado A · dale vuelta al casete <span aria-hidden="true">↻</span><span class="sr-only"> (volver al inicio)</span>
-  </a>
+  <p class="footer-lado" aria-hidden="true">Fin del Lado A ♡</p>
+  <a class="footer-cinta" href="#inicio"><span aria-hidden="true">↑</span> Volver al inicio</a>
 </footer>
 
 <script src="js/lista.js"></script>

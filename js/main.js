@@ -263,6 +263,19 @@ giftCopy.addEventListener('click', async () => {
   }, 2500);
 });
 
+/* "Volver al inicio" del pie y "ver todo" de la portada: se mueven con código
+   para que funcionen siempre, aunque la dirección ya tenga ese #ancla */
+function irA(selector) {
+  const destino = selector === '#inicio' ? 0 : document.querySelector(selector).getBoundingClientRect().top + scrollY;
+  const suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  scrollTo({ top: Math.max(0, destino), behavior: suave ? 'smooth' : 'auto' });
+}
+document.querySelectorAll('.footer-cinta, .scroll-hint').forEach(link =>
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    irA(link.getAttribute('href'));
+  }));
+
 /* Lista de regalos en una ventana (lista.html queda para links directos) */
 const listaModal = document.getElementById('lista-modal');
 
