@@ -83,15 +83,27 @@ function obtenerElegidos() {
   return consultaElegidos;
 }
 
-/* Regalos avisados desde este teléfono en esta visita: se marcan al tiro,
- * aunque la hoja de Google tarde hasta un minuto en reflejarlos. */
+/* Regalos avisados desde este teléfono: se marcan al tiro, aunque la hoja de
+ * Google tarde en reflejarlos. La marca local dura solo 30 segundos (más que
+ * la caché de 20 s de la aplicación web); después manda la hoja, así que
+ * si se borra una fila allí, el regalo vuelve a quedar disponible. */
+const DURACION_MARCA_LOCAL_MS = 30 * 1000;
+
+function marcasLocales() {
+  try {
+    const marcas = JSON.parse(sessionStorage.getItem('regalados') || '[]');
+    return marcas.filter(m => m && typeof m === 'object' && m.hasta > Date.now());
+  } catch { return []; }
+}
 function regaladosLocal() {
-  try { return JSON.parse(sessionStorage.getItem('regalados') || '[]'); } catch { return []; }
+  return marcasLocales().map(m => m.nombre);
 }
 function marcarRegaladoLocal(nombre) {
   try {
-    sessionStorage.setItem('regalados', JSON.stringify([...regaladosLocal(), nombre]));
+    const marca = { nombre, hasta: Date.now() + DURACION_MARCA_LOCAL_MS };
+    sessionStorage.setItem('regalados', JSON.stringify([...marcasLocales(), marca]));
   } catch { /* sin almacenamiento: se verá al recargar */ }
+  consultaElegidos = null; // la próxima vez se pregunta de nuevo a Google
   // Redibuja las listas visibles para que el regalo aparezca como ya regalado
   for (const grid of document.querySelectorAll('.lista-grid')) {
     if (grid.children.length && grid.dataset.invitado !== undefined) renderLista(grid, grid.dataset.invitado);
