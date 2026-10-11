@@ -191,6 +191,31 @@ footer::before {
   opacity: 1;
 }
 
+/* Sin música: "toca el casete" en una píldora con borde fucsia suave.
+   Alto + margen inferior suman lo mismo que las dos líneas de "sonando",
+   así la portada no salta al tocar. */
+html:not(.musica-sonando) .cassette-hint {
+  box-sizing: border-box;
+  width: fit-content;
+  height: 2.1rem;
+  min-height: 0;
+  margin: -1.8rem auto 2.47rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(200,48,80,0.45);
+  border-radius: 999px;
+  color: var(--rose-btn);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  animation: latido-hint 3s ease-in-out infinite;
+}
+@keyframes latido-hint {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 @keyframes noteUp {
   0%   { opacity:0; transform:translateY(0) scale(.7); }
   25%  { opacity:1; }
@@ -1593,6 +1618,7 @@ button.gift-notify { background: none; border: 0; font: inherit; font-size: 0.85
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .brillo { animation: none; opacity: 0; }
+  html:not(.musica-sonando) .cassette-hint { animation: none; }
   .barra-progreso span { animation: none; width: 100%; opacity: 0.5; }
   .icono-eq i { animation: none; }
   .icono-eq i:nth-child(1) { transform: scaleY(0.5); }
